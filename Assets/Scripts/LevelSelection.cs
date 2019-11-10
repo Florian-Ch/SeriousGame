@@ -40,7 +40,12 @@ public class LevelSelection : MonoBehaviour
 
         // setup ennemies
         List<Monster> _ennemies = new List<Monster>();
-        Monster m = new Monster("Hauntree", "Tank", "Heliamphora", 100, 10, 10, 10);
+        List<Skill> m1Skills = new List<Skill>();
+        Skill m1s1 = new Skill("Petrification", "Skill", 1, 1);
+        Skill m1s2 = new Skill("Peur", "Skill", 3, 1.5);
+        m1Skills.Add(m1s1);
+        m1Skills.Add(m1s2);
+        Monster m = new Monster("Hauntree", "Tank", "Heliamphora", 100, 10, 10, 60, m1Skills);
         _ennemies.Add(m);
         Combat.setEnnemies(_ennemies);
 

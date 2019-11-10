@@ -4,9 +4,10 @@ using System.Collections.Generic;
 public class Monster
 {
     private string name, role, diet;
-    private int level, experience, maxHp, hp, attack, defense, speed, critRate, critDamage;
+    private int level, experience, maxHp, hp, attack, defense, speed, critRate, critDamage, attackBar;
+    private List<Skill> _skills;
 
-    public Monster(string nom, string rol, string alim, int pv, int atk, int def, int spd)
+    public Monster(string nom, string rol, string alim, int pv, int atk, int def, int spd, List<Skill> skills)
     {
         name = nom;
         role = rol;
@@ -20,6 +21,8 @@ public class Monster
         speed = spd;
         critRate = 15;
         critDamage = 150;
+        attackBar = 0;
+        _skills = skills;
     }
 
     public string getName() { return name; }
@@ -30,6 +33,10 @@ public class Monster
 
     public int getMaxHp() { return maxHp; }
 
+    public int getHp() { return hp; }
+
+    public void setHp(int pv) { hp = pv; }
+
     public int getAttack() { return attack; }
 
     public int getDef() { return defense; }
@@ -39,6 +46,12 @@ public class Monster
     public int getCritRate() { return critRate; }
 
     public int getCritDmg() { return critDamage; }
+
+    public int getAttackBar() { return attackBar; }
+
+    public void setAttackBar(int atb) { attackBar = atb; }
+
+    public List<Skill> getSkills() { return _skills; }
 
     override
     public string ToString()

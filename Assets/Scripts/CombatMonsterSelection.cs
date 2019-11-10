@@ -108,4 +108,13 @@ public class CombatMonsterSelection : MonoBehaviour
             }        
         }
     }
+
+    public void StartFight()
+    {
+        if(_playerMonsters.Count > 0)
+        {
+            Combat.setPlayerMonsters(_playerMonsters);
+            SceneManager.LoadScene("CombatDisplay");
+        }
+    }
 }
