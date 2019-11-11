@@ -255,6 +255,8 @@ MonoBehaviour:
   cdContainer: {fileID: 864956542}
   healthBar: {fileID: 7288468380279642794, guid: 67a329cefa34c2d43b20b6e9a30794e8,
     type: 3}
+  attackBar: {fileID: 7288468380279642794, guid: 6214f6330da46a04c858c39db1128c8b,
+    type: 3}
   endText: {fileID: 147274764}
   cdText: {fileID: 393831994}
 --- !u!1 &147274762
