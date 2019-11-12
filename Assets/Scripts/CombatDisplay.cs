@@ -2,13 +2,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 public class CombatDisplay   : MonoBehaviour
 {
-    public GameObject playerMonstersContainer, ennemiesContainer, skillsContainer, monsterButtonPrefab, endContainer, cdContainer, healthBar, attackBar;
+    public GameObject playerMonstersContainer, ennemiesContainer, skillsContainer, monsterButtonPrefab, endContainer, cdContainer, healthBar, attackBar, skillInfo;
     public Text endText, cdText;
 
     private List<Monster> _playerMonsters;
@@ -21,6 +22,7 @@ public class CombatDisplay   : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        skillInfo.SetActive(false);
         endContainer.SetActive(false);
         cdContainer.SetActive(false);
         _playerMonsters = Combat.getPlayerMonsters();
@@ -96,8 +98,43 @@ public class CombatDisplay   : MonoBehaviour
                 skillIcon.transform.SetParent(skillsContainer.transform);
                 skillIcon.transform.localScale = new Vector3(1, 1, 1);
                 skillIcon.GetComponent<Button>().onClick.AddListener(() => SelectSkill(skill));
+                
+                EventTrigger triggerDown = skillIcon.AddComponent<EventTrigger>();
+                var pointerDown = new EventTrigger.Entry();
+                pointerDown.eventID = EventTriggerType.PointerDown;
+                pointerDown.callback.AddListener((e) => DisplaySkillInfo(skill, skillIcon));
+                triggerDown.triggers.Add(pointerDown);
+
+                EventTrigger triggerUp = skillIcon.AddComponent<EventTrigger>();
+                var pointerUp = new EventTrigger.Entry();
+                pointerUp.eventID = EventTriggerType.PointerUp;
+                pointerUp.callback.AddListener((e) => RemoveSkillInfo());
+                triggerUp.triggers.Add(pointerUp);
+
+                EventTrigger triggerExit = skillIcon.AddComponent<EventTrigger>();
+                var pointerExit = new EventTrigger.Entry();
+                pointerExit.eventID = EventTriggerType.PointerExit;
+                pointerExit.callback.AddListener((e) => RemoveSkillInfo());
+                triggerExit.triggers.Add(pointerExit);
             }
         }  
+    }
+
+    private void RemoveSkillInfo()
+    {
+        skillInfo.SetActive(false);
+    }
+
+    private void DisplaySkillInfo(Skill skill, GameObject icon)
+    {
+        Text title = skillInfo.transform.Find("Title").GetComponent<Text>();
+        title.text = skill.getName();
+        Text multiplier = skillInfo.transform.Find("Multiplier").GetComponent<Text>();
+        multiplier.text = "Multiplier = " + skill.getMultiplier();
+        Text cd = skillInfo.transform.Find("Cd").GetComponent<Text>();
+        cd.text = "Cooldown = " + (skill.getCooldown() - 1);
+        skillInfo.transform.position = new Vector3(icon.transform.position.x, skillInfo.transform.position.y);
+        skillInfo.SetActive(true);
     }
 
     private void DisplayMonsters(List<Monster> _monstersList, GameObject parent)
