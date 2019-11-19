@@ -64,6 +64,20 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Classes\Combat.cs" />
+    <Compile Include="Assets\Classes\Food.cs" />
+    <Compile Include="Assets\Classes\Foods\Algue.cs" />
+    <Compile Include="Assets\Classes\Foods\Fraise.cs" />
+    <Compile Include="Assets\Classes\Foods\HaricotRouge.cs" />
+    <Compile Include="Assets\Classes\Foods\Lait.cs" />
+    <Compile Include="Assets\Classes\Foods\Meals\Chili.cs" />
+    <Compile Include="Assets\Classes\Foods\Meals\Sushi.cs" />
+    <Compile Include="Assets\Classes\Foods\Meals\YaourtFraise.cs" />
+    <Compile Include="Assets\Classes\Foods\Oignon.cs" />
+    <Compile Include="Assets\Classes\Foods\Poivron.cs" />
+    <Compile Include="Assets\Classes\Foods\Riz.cs" />
+    <Compile Include="Assets\Classes\Foods\Steak.cs" />
+    <Compile Include="Assets\Classes\Foods\Thon.cs" />
+    <Compile Include="Assets\Classes\Meal.cs" />
     <Compile Include="Assets\Classes\Monster.cs" />
     <Compile Include="Assets\Classes\Player.cs" />
     <Compile Include="Assets\Classes\Skill.cs" />
