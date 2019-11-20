@@ -6,4 +6,6 @@ public abstract class Food
     protected string name, description, production, season;
     protected List<string> contains;
     protected Dictionary<string, int> bonus;
+
+    public string getName() { return name; }
 }

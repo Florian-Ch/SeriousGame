@@ -12,4 +12,28 @@ public class InteractionFood
         multiplier = coeff;
     }
 
+    public List<Food> Foods { get { return _foods; } }
+
+    public int Multiplier { get { return multiplier; } }
+
+    public bool MatchFoods(List<Food> foodList)
+    {
+        bool res = false;
+        if(_foods.Count == foodList.Count)
+        {
+            int counter = 0;
+            foreach(Food f in _foods)
+            {
+                if (foodList.Contains(f))
+                {
+                    counter++;
+                }
+            }
+            if(counter == _foods.Count)
+            {
+                res = true;
+            }
+        }
+        return res;
+    }
 }

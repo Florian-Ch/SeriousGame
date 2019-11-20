@@ -17,7 +17,7 @@ public class Poivron : Food
     {
         get
         {
-            if (instance != null)
+            if (instance == null)
             {
                 instance = new Poivron();
             }

@@ -17,7 +17,7 @@ public class Riz : Food
     {
         get
         {
-            if (instance != null)
+            if (instance == null)
             {
                 instance = new Riz();
             }

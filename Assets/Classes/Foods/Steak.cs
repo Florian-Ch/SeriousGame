@@ -17,7 +17,7 @@ public class Steak : Food
     {
         get
         {
-            if (instance != null)
+            if (instance == null)
             {
                 instance = new Steak();
             }

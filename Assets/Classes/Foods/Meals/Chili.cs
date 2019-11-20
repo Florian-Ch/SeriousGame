@@ -18,7 +18,7 @@ public class Chili : Meal
     {
         get
         {
-            if (instance != null)
+            if (instance == null)
             {
                 instance = new Chili();
             }

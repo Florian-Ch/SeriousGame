@@ -78,6 +78,7 @@
     <Compile Include="Assets\Classes\Foods\Steak.cs" />
     <Compile Include="Assets\Classes\Foods\Thon.cs" />
     <Compile Include="Assets\Classes\InteractionFood.cs" />
+    <Compile Include="Assets\Classes\ListInteractionFood.cs" />
     <Compile Include="Assets\Classes\Meal.cs" />
     <Compile Include="Assets\Classes\Monster.cs" />
     <Compile Include="Assets\Classes\Player.cs" />

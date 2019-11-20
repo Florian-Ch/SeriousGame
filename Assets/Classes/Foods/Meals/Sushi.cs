@@ -18,7 +18,7 @@ public class Sushi : Meal
     {
         get
         {
-            if (instance != null)
+            if (instance == null)
             {
                 instance = new Sushi();
             }

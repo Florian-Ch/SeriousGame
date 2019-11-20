@@ -18,7 +18,7 @@ public class YaourtFraise : Meal
     {
         get
         {
-            if (instance != null)
+            if (instance == null)
             {
                 instance = new YaourtFraise();
             }

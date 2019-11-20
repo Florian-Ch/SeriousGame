@@ -17,7 +17,7 @@ public class Thon : Food
     {
         get
         {
-            if (instance != null)
+            if (instance == null)
             {
                 instance = new Thon();
             }

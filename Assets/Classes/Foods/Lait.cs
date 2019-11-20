@@ -17,7 +17,7 @@ public class Lait : Food
     {
         get
         {
-            if (instance != null)
+            if (instance == null)
             {
                 instance = new Lait();
             }

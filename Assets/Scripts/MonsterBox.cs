@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class MonsterBox : MonoBehaviour
 {
-	public GameObject monsterButtonPrefab, monstersListContainer, data, foodDisplay;
+	public GameObject monsterButtonPrefab, monstersListContainer, data, foodDisplay, foodListContainer;
    
     private List<Monster> _monsters;
 
@@ -44,9 +44,10 @@ public class MonsterBox : MonoBehaviour
             thumbnail.GetComponent<Image>().sprite = sprite;                                // apply texture
             thumbnail.transform.SetParent(monstersListContainer.transform);                 // place button at the right place
             thumbnail.transform.localScale = new Vector3(1, 1, 1);                          // resize button (sooo huge by default)
-            string monsterName = m.getName();
             thumbnail.GetComponent<Button>().onClick.AddListener(() => DisplayMonsterData(m));
         }
+
+        DisplayFoodList();
 
         if(_monsters.Count > 0)
             DisplayMonsterData(_monsters[0]);   // display data of the first monster
@@ -93,4 +94,27 @@ public class MonsterBox : MonoBehaviour
 		foodDisplay.SetActive(false);
 		data.SetActive(true);
 	}
+
+    public void DisplayFoodList()
+    {
+        // create monsters list
+        foreach (Food f in Player.getFoodDico().Keys)
+        {
+            if (Player.getFoodDico()[f] > 0)
+            {
+                Debug.Log(f.getName());
+                Sprite sprite = Resources.Load<Sprite>("FoodSprites/" + f.getName().Replace(' ', '_'));    // load texture
+                GameObject thumbnail = Instantiate(monsterButtonPrefab) as GameObject;          // create button
+                thumbnail.GetComponent<Image>().sprite = sprite;                                // apply texture
+                thumbnail.transform.SetParent(foodListContainer.transform);                 // place button at the right place
+                thumbnail.transform.localScale = new Vector3(1, 1, 1);                          // resize button (sooo huge by default)
+                thumbnail.GetComponent<Button>().onClick.AddListener(() => AddFoodToMonster(f));
+            }
+        }
+    }
+
+    public void AddFoodToMonster(Food f)
+    {
+
+    }
 }
