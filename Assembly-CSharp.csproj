@@ -69,6 +69,7 @@
     <Compile Include="Assets\Classes\Skill.cs" />
     <Compile Include="Assets\Scripts\CombatDisplay.cs" />
     <Compile Include="Assets\Scripts\CombatMonsterSelection.cs" />
+    <Compile Include="Assets\Scripts\InvocationPortal.cs" />
     <Compile Include="Assets\Scripts\LevelSelection.cs" />
     <Compile Include="Assets\Scripts\MainMenu.cs" />
     <Compile Include="Assets\Scripts\MonsterBox.cs" />
