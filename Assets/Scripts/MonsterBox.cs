@@ -6,9 +6,8 @@ using UnityEngine.UI;
 
 public class MonsterBox : MonoBehaviour
 {
-    public GameObject monsterButtonPrefab;
-    public GameObject monstersListContainer;
-
+	public GameObject monsterButtonPrefab, monstersListContainer, data, foodDisplay;
+   
     private List<Monster> _monsters;
 
     private GameObject nameDisplay;
@@ -24,6 +23,7 @@ public class MonsterBox : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+		foodDisplay.SetActive(false);
         _monsters = Player.getMonsters();
 
         nameDisplay = GameObject.Find("MonsterName");
@@ -81,4 +81,16 @@ public class MonsterBox : MonoBehaviour
         critRateDisplay.GetComponent<Text>().text = m.getCritRate().ToString();
         critDmgDisplay.GetComponent<Text>().text = m.getCritDmg().ToString();
     }
+
+    public void DisplayFood()
+	{
+		data.SetActive(false);
+		foodDisplay.SetActive(true);
+	}
+
+    public void DisplayData()
+	{
+		foodDisplay.SetActive(false);
+		data.SetActive(true);
+	}
 }
