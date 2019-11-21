@@ -7,6 +7,7 @@ public static class Player
     private static List<Monster> _monsters = new List<Monster>();
     private static int numberMonstersMax;
     private static Monster mainMonster;
+    private static Dictionary<Food, int> _foods = new Dictionary<Food, int>();
 
     public static void setUsername(string name)
     {
@@ -31,5 +32,36 @@ public static class Player
     public static void defineMainMonster(Monster m)
     {
         mainMonster = m;
+    }
+
+    public static void addFood(Food f, int quantity)
+    {
+        if (_foods.ContainsKey(f))
+        {
+            _foods[f] += quantity;
+        }
+        else
+        {
+            _foods.Add(f, quantity);
+        }
+    }
+    public static bool removeFood(Food f, int quantity)
+    {
+        bool res = true;
+        if (_foods.ContainsKey(f) && _foods[f] >= quantity)
+        {
+            _foods[f] -= quantity;
+        }
+        else
+        {
+            res = false;
+        }
+        return res;
+    }
+
+
+    public static Dictionary<Food, int> getFoodDico()
+    {
+        return _foods;
     }
 }

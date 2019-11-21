@@ -6,6 +6,7 @@ public class Monster
     private string name, role, diet;
     private int level, experience, maxHp, hp, attack, defense, speed, critRate, critDamage, attackBar;
     private List<Skill> _skills;
+    private Food[] _foods;
 
     public Monster(string nom, string rol, string alim, int pv, int atk, int def, int spd, List<Skill> skills)
     {
@@ -23,6 +24,7 @@ public class Monster
         critDamage = 150;
         attackBar = 0;
         _skills = skills;
+        _foods = new Food[3];
     }
 
     public string getName() { return name; }
@@ -52,6 +54,52 @@ public class Monster
     public void setAttackBar(int atb) { attackBar = atb; }
 
     public List<Skill> getSkills() { return _skills; }
+
+    public bool addFood(Food f)
+    {
+        bool res = true;
+        if (_foods[0] == null)
+        {
+            _foods[0] = f;
+        }
+        else if (_foods[1] == null)
+        {
+            _foods[1] = f;
+        }
+        else if (_foods[2] == null)
+        {
+            _foods[2] = f;
+        }
+        else
+        {
+            res = false;
+        }
+        return res;
+    }
+
+    public void removeFood(Food f)
+    {
+        if(_foods[0] == f)
+        {
+            _foods[0] = _foods[1];
+            _foods[1] = _foods[2];
+            _foods[2] = null;
+        }
+        else if (_foods[1] == f)
+        {
+            _foods[1] = _foods[2];
+            _foods[2] = null;
+        }
+        else if (_foods[2] == f)
+        {
+            _foods[2] = null;
+        }
+    }
+
+    public Food[] getFood()
+    {
+        return _foods;
+    }
 
     override
     public string ToString()

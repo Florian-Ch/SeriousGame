@@ -16,6 +16,20 @@ public class MainMenu : MonoBehaviour
         if(Player.getUsername() != PlayerUsername)  // only create data one the first load
         {
             Player.setUsername(PlayerUsername);
+
+            Player.addFood(Fraise.Instance, 1);
+            Player.addFood(HaricotRouge.Instance, 1);
+            Player.addFood(Lait.Instance, 1);
+            Player.addFood(Oignon.Instance, 1);
+            Player.addFood(Poivron.Instance, 1);
+            Player.addFood(Riz.Instance, 1);
+            Player.addFood(Steak.Instance, 1);
+            Player.addFood(Thon.Instance, 1);
+
+            Player.addFood(Chili.Instance, 0);
+            Player.addFood(Sushi.Instance, 0);
+            Player.addFood(YaourtFraise.Instance, 0);
+
             List<Skill> m1Skills = new List<Skill>();
             Skill m1s1 = new Skill("Coup de boule", "Skill", 1, 1);
             Skill m1s2 = new Skill("Enervement", "Skill", 2, 1.2);
@@ -53,5 +67,10 @@ public class MainMenu : MonoBehaviour
     public void GoToMonsterBox()
     {
         SceneManager.LoadScene("MonsterBox");
+    }
+
+    public void GoToInvocation()
+    {
+        SceneManager.LoadScene("InvocationPortal");
     }
 }
