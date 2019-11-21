@@ -45,6 +45,20 @@ public static class Player
             _foods.Add(f, quantity);
         }
     }
+    public static bool removeFood(Food f, int quantity)
+    {
+        bool res = true;
+        if (_foods.ContainsKey(f) && _foods[f] >= quantity)
+        {
+            _foods[f] -= quantity;
+        }
+        else
+        {
+            res = false;
+        }
+        return res;
+    }
+
 
     public static Dictionary<Food, int> getFoodDico()
     {

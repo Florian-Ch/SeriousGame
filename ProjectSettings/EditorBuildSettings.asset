@@ -20,4 +20,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/CombatDisplay.unity
     guid: c00db39e3ca8cc04fbfa9447a866c2dc
+  - enabled: 1
+    path: Assets/Scenes/InvocationPortal.unity
+    guid: dabfada409c0ebb44b656f2d4890fd8e
   m_configObjects: {}

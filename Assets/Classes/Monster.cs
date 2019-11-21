@@ -77,6 +77,30 @@ public class Monster
         return res;
     }
 
+    public void removeFood(Food f)
+    {
+        if(_foods[0] == f)
+        {
+            _foods[0] = _foods[1];
+            _foods[1] = _foods[2];
+            _foods[2] = null;
+        }
+        else if (_foods[1] == f)
+        {
+            _foods[1] = _foods[2];
+            _foods[2] = null;
+        }
+        else if (_foods[2] == f)
+        {
+            _foods[2] = null;
+        }
+    }
+
+    public Food[] getFood()
+    {
+        return _foods;
+    }
+
     override
     public string ToString()
     {

@@ -68,4 +68,9 @@ public class MainMenu : MonoBehaviour
     {
         SceneManager.LoadScene("MonsterBox");
     }
+
+    public void GoToInvocation()
+    {
+        SceneManager.LoadScene("InvocationPortal");
+    }
 }
