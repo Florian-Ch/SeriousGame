@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 public static class ListInteractionFood
 {
-    private static List<InteractionFood> _interactions;
+    private static List<InteractionFood> _interactions = new List<InteractionFood>();
 
     public static void AddInteraction(List<Food> _food, int multiplier)
     {

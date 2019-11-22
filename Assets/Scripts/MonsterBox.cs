@@ -99,22 +99,26 @@ public class MonsterBox : MonoBehaviour
     public void DisplayData()
 	{
 		foodDisplay.SetActive(false);
+        DisplayMonsterData(selectedMonster);
 		data.SetActive(true);
 	}
 
     public void DisplayFoodList()
     {
         foreach (Transform child in foodListContainer.transform) { GameObject.Destroy(child.gameObject); }
-        foreach (Food f in Player.getFoodDico().Keys)
+        if(Player.getFoodDico().Count > 0)
         {
-            if (Player.getFoodDico()[f] > 0)
+            foreach (Food f in Player.getFoodDico().Keys)
             {
-                Sprite sprite = Resources.Load<Sprite>("FoodSprites/" + f.getName().Replace(' ', '_'));    // load texture
-                GameObject thumbnail = Instantiate(monsterButtonPrefab) as GameObject;          // create button
-                thumbnail.GetComponent<Image>().sprite = sprite;                                // apply texture
-                thumbnail.transform.SetParent(foodListContainer.transform);                 // place button at the right place
-                thumbnail.transform.localScale = new Vector3(1, 1, 1);                          // resize button (sooo huge by default)
-                thumbnail.GetComponent<Button>().onClick.AddListener(() => AddFoodToMonster(f));
+                if (Player.getFoodDico()[f] > 0)
+                {
+                    Sprite sprite = Resources.Load<Sprite>("FoodSprites/" + f.getName().Replace(' ', '_'));    // load texture
+                    GameObject thumbnail = Instantiate(monsterButtonPrefab) as GameObject;          // create button
+                    thumbnail.GetComponent<Image>().sprite = sprite;                                // apply texture
+                    thumbnail.transform.SetParent(foodListContainer.transform);                 // place button at the right place
+                    thumbnail.transform.localScale = new Vector3(1, 1, 1);                          // resize button (sooo huge by default)
+                    thumbnail.GetComponent<Button>().onClick.AddListener(() => AddFoodToMonster(f));
+                }
             }
         }
     }
@@ -124,6 +128,9 @@ public class MonsterBox : MonoBehaviour
         bool added = selectedMonster.addFood(f);
         if (added)
         {
+            int mult = ListInteractionFood.GetMultiplier(new List<Food>(selectedMonster.getFood()));
+            selectedMonster.FoodBonusMultiplier = mult;
+            AddStats(f, selectedMonster);
             DisplayMonsterFood(selectedMonster);
             Player.removeFood(f, 1);
             DisplayFoodList();
@@ -146,6 +153,10 @@ public class MonsterBox : MonoBehaviour
         Player.addFood(f, 1);
         DisplayMonsterFood(selectedMonster);
         DisplayFoodList();
+
+        int mult = ListInteractionFood.GetMultiplier(new List<Food>(selectedMonster.getFood()));
+        selectedMonster.FoodBonusMultiplier = mult;
+        RemoveStats(f, selectedMonster);
     }
 
     public void DisplayMonsterFood(Monster m)
@@ -173,5 +184,51 @@ public class MonsterBox : MonoBehaviour
                 thumbnail.GetComponent<Button>().onClick.AddListener(() => RemoveFoodFromMonster(param));
             }
         }
+    }
+
+    public void AddStats(Food f, Monster m)
+    {
+        m.addStats(-m.BonusStats["hp"], -m.BonusStats["attack"], -m.BonusStats["defense"], -m.BonusStats["speed"], -m.BonusStats["critRate"], -m.BonusStats["critDamage"]);
+
+        Dictionary<string, int> statsToAdd = f.getBonus();
+        foreach (KeyValuePair<string, int> kvp in f.getBonus())
+        {
+            m.BonusStats[kvp.Key] += statsToAdd[kvp.Key];
+        }
+
+        foreach (KeyValuePair<string, int> kvp in f.getBonus())
+        {
+            m.BonusStats[kvp.Key] *= m.FoodBonusMultiplier;
+        }
+        
+        m.addStats(m.BonusStats["hp"], m.BonusStats["attack"], m.BonusStats["defense"], m.BonusStats["speed"], m.BonusStats["critRate"], m.BonusStats["critDamage"]);
+    }
+
+    public void RemoveStats(Food f, Monster m)
+    {
+        m.addStats(-m.BonusStats["hp"], -m.BonusStats["attack"], -m.BonusStats["defense"], -m.BonusStats["speed"], -m.BonusStats["critRate"], -m.BonusStats["critDamage"]);
+
+        foreach(string s in f.getBonus().Keys)  // resets bonus stats
+        {
+            m.BonusStats[s] = 0;
+        }
+
+        foreach(Food food in new List<Food>(m.getFood()))
+        {
+            if(food != null)
+            {
+                foreach (KeyValuePair<string, int> kvp in food.getBonus())
+                {
+                    m.BonusStats[kvp.Key] += food.getBonus()[kvp.Key];
+                }
+            }
+        }
+
+        foreach (KeyValuePair<string, int> kvp in f.getBonus())
+        {
+            m.BonusStats[kvp.Key] *= m.FoodBonusMultiplier;
+        }
+
+        m.addStats(m.BonusStats["hp"], m.BonusStats["attack"], m.BonusStats["defense"], m.BonusStats["speed"], m.BonusStats["critRate"], m.BonusStats["critDamage"]);
     }
 }

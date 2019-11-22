@@ -17,18 +17,18 @@ public class MainMenu : MonoBehaviour
         {
             Player.setUsername(PlayerUsername);
 
-            Player.addFood(Fraise.Instance, 1);
-            Player.addFood(HaricotRouge.Instance, 1);
-            Player.addFood(Lait.Instance, 1);
-            Player.addFood(Oignon.Instance, 1);
-            Player.addFood(Poivron.Instance, 1);
-            Player.addFood(Riz.Instance, 1);
-            Player.addFood(Steak.Instance, 1);
-            Player.addFood(Thon.Instance, 1);
-
-            Player.addFood(Chili.Instance, 0);
+            Player.addFood(Chili.Instance, 1);
             Player.addFood(Sushi.Instance, 0);
-            Player.addFood(YaourtFraise.Instance, 0);
+            Player.addFood(YaourtFraise.Instance, 1);
+
+            Player.addFood(Fraise.Instance, 0);
+            Player.addFood(HaricotRouge.Instance, 0);
+            Player.addFood(Lait.Instance, 0);
+            Player.addFood(Oignon.Instance, 0);
+            Player.addFood(Poivron.Instance, 0);
+            Player.addFood(Riz.Instance, 1);
+            Player.addFood(Steak.Instance, 0);
+            Player.addFood(Thon.Instance, 0);
 
             List<Skill> m1Skills = new List<Skill>();
             Skill m1s1 = new Skill("Coup de boule", "Skill", 1, 1);
@@ -48,6 +48,13 @@ public class MainMenu : MonoBehaviour
             Monster m2 = new Monster("Hauntree", "Tank", "Heliamphora", 1200, 50, 100, 50, m2Skills);
             Player.addMonster(m2);
             Player.defineMainMonster(m1);
+
+            // List of food interactions, not fake MUST be created at start
+
+            ListInteractionFood.AddInteraction(new List<Food>() { Chili.Instance, Riz.Instance }, 2);
+            ListInteractionFood.AddInteraction(new List<Food>() { Chili.Instance, Riz.Instance, YaourtFraise.Instance }, 3);
+
+            // End of food interactions
         }
         //END fake data
         username.text = Player.getUsername();

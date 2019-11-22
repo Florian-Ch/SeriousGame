@@ -12,6 +12,7 @@ public class Chili : Meal
         season = "Fin du XIXème siècle";   // date d'apparition
         contains = new List<string>(){"Protéines", "Glucides"};
         _foods = new List<Food>(){HaricotRouge.Instance, Oignon.Instance, Poivron.Instance, Steak.Instance};
+        bonus = new Dictionary<string, int>() { { "hp", 500 }, { "attack", 50 }, { "defense", 30 }, { "speed", 0 }, { "critRate", 10 }, { "critDamage", 50 } };
     }
 
     public static Chili Instance

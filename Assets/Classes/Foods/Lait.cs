@@ -11,6 +11,7 @@ public class Lait : Food
         production = "USA (14.6%), Inde (11.7%)";
         season = "Toute l'année";
         contains = new List<string>(){"Glucides", "Lipides", "Protéines", "Calcium", "Phosphore"};
+        bonus = new Dictionary<string, int>() { { "hp", 0 }, { "attack", 0 }, { "defense", 0 }, { "speed", 0 }, { "critRate", 0 }, { "critDamage", 0 } };
     }
 
     public static Lait Instance

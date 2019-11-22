@@ -1,12 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 
 public class Monster
 {
     private string name, role, diet;
-    private int level, experience, maxHp, hp, attack, defense, speed, critRate, critDamage, attackBar;
+    private int level, experience, maxHp, hp, attack, defense, speed, critRate, critDamage, attackBar, foodBonusMultiplier;
     private List<Skill> _skills;
     private Food[] _foods;
+    Dictionary<string, int> bonusStats;
 
     public Monster(string nom, string rol, string alim, int pv, int atk, int def, int spd, List<Skill> skills)
     {
@@ -25,6 +27,8 @@ public class Monster
         attackBar = 0;
         _skills = skills;
         _foods = new Food[3];
+        foodBonusMultiplier = 1;
+        bonusStats = new Dictionary<string, int>() { { "hp", 0 }, { "attack", 0 }, { "defense", 0 }, { "speed", 0 }, { "critRate", 0 }, { "critDamage", 0 } };
     }
 
     public string getName() { return name; }
@@ -79,7 +83,7 @@ public class Monster
 
     public void removeFood(Food f)
     {
-        if(_foods[0] == f)
+        if (_foods[0] == f)
         {
             _foods[0] = _foods[1];
             _foods[1] = _foods[2];
@@ -101,9 +105,23 @@ public class Monster
         return _foods;
     }
 
+    public void addStats(int pv, int atk, int def, int spd, int cr, int cd)
+    {
+        maxHp += pv;
+        hp += pv;
+        attack += atk;
+        defense += def;
+        speed += spd;
+        critRate += cr;
+        critDamage += cd;
+    }
+
     override
     public string ToString()
     {
         return "Monstre : " + name;
     }
+
+    public int FoodBonusMultiplier { get => foodBonusMultiplier; set => foodBonusMultiplier = value; }
+    public Dictionary<string, int> BonusStats { get => bonusStats; set => bonusStats = value; }
 }
