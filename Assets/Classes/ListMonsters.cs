@@ -1,35 +1,50 @@
-using System.Collections;
 using System.Collections.Generic;
 
 public static class ListMonsters {
-    static List<Monster> monsters = new List<Monster>();
+	static List<Monster> monsters = new List<Monster>();
 
 
-    public static void Init() {
-        List<Skill> skills = new List<Skill>();
-        #region Creating Monster Hauntree
-        // Create skills
-        skills.Add(new Skill("Petrification", "Skill", 1, 1));
-        skills.Add(new Skill("Peur", "Skill", 3, 1.5));
+	public static void Init()
+	{
+		List<Skill> skills = new List<Skill>();
+		#region Creating Monster Hauntree
+		// Create skills
+		skills.Add(new Skill("Petrification", "Skill", 1, 1));
+		skills.Add(new Skill("Peur", "Skill", 3, 1.5));
 
-        monsters.Add(new Monster("Hauntree", "Tank", "Heliamphora", 100, 1000, 10, 60 , deepcopy(skills)));
+		monsters.Add(new Monster("Hauntree", "Tank", "Heliamphora", 1000, 100, 10, 60, Deepcopy(skills)));
 
 		skills.Clear();
-        #endregion
-    }
+		#endregion
 
-    public static Monster get(string name) {
-        foreach(Monster m in monsters) {
-            if(m.getName() == name) return m;
-        }
-        return null;
-    }
+		#region Creating Monster Asterios
+		// Create skills
+		skills.Add(new Skill("Coup de boule", "Skill", 1, 1));
+		skills.Add(new Skill("Enervement", "Skill", 2, 1.2));
+		skills.Add(new Skill("Commander", "Skill", 5, 3));
 
-    public static List<Skill> deepcopy(List<Skill> skills) {
-        List<Skill> copy = new List<Skill>();
-		foreach(Skill skill in skills) {
+		monsters.Add(new Monster("Asterios", "Support", "Nepenthes", 1000, 70, 40, 70, Deepcopy(skills)));
+
+		skills.Clear();
+		#endregion
+	}
+
+	public static Monster get(string name)
+	{
+		foreach (Monster m in monsters)
+		{
+			if (m.getName() == name) return m;
+		}
+		return null;
+	}
+
+	private static List<Skill> Deepcopy(List<Skill> skills)
+	{
+		List<Skill> copy = new List<Skill>();
+		foreach (Skill skill in skills)
+		{
 			copy.Add(skill);
 		}
-	    return copy;
-    }
+		return copy;
+	}
 }
