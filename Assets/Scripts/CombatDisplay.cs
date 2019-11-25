@@ -51,23 +51,7 @@ public class CombatDisplay : MonoBehaviour {
 				}
 				else                // Ennemy turn, AI
 				{
-					List<Skill> skills = monsterPlaying.getSkills();
-					int rnd = Random.Range(0, _playerMonsters.Count - 1);
-					Monster monsterToAttack = _playerMonsters[rnd];
-					GameObject hpBar = GameObject.Find("PlayerMonstersContainer").transform.GetChild(rnd).Find("HealthBar(Clone)").gameObject;
-					if (skills[skills.Count - 1].getCooldown() == 1)
-					{
-						selectedSkill = skills[skills.Count - 1];
-					}
-					else if (skills[skills.Count - 2].getCooldown() == 1)
-					{
-						selectedSkill = skills[skills.Count - 1];
-					}
-					else if (skills[skills.Count - 3].getCooldown() == 1)
-					{
-						selectedSkill = skills[skills.Count - 1];
-					}
-					AttackMonster(monsterToAttack, hpBar);
+					ennemiesTurn();
 				}
 			}
 		}
@@ -154,6 +138,9 @@ public class CombatDisplay : MonoBehaviour {
 			hpBar.transform.SetParent(monster.transform);
 			hpBar.transform.localScale = new Vector3(1, 1, 1);
 			hpBar.transform.position = new Vector3(0, 0.75f, 0); // 1 = 62 ?! so 0.75 should be around 46
+
+			// Set HPbar to monster
+			m.HealthBar = hpBar;
 
 			// Get attackBar
 			GameObject atb = Instantiate(attackBar) as GameObject;
@@ -323,10 +310,45 @@ public class CombatDisplay : MonoBehaviour {
 		{
 			// Get gameobject of monster
 			GameObject monster_gameobject = ennemiesContainer.transform.Find(monster.getName()).gameObject;
-			// Get HP bar
-			GameObject healthBar = monster_gameobject.transform.Find("HealthBar(Clone)").gameObject;
 
-			monster_gameobject.GetComponent<Button>().onClick.AddListener(() => AttackMonster(monster, healthBar));
+			monster_gameobject.GetComponent<Button>().onClick.AddListener(() => AttackMonster(monster, monster.HealthBar));
 		}
+	}
+	
+	private void ennemiesTurn()
+	{
+		List<Skill> skills = monsterPlaying.getSkills(); // Get skills of current monster
+		
+		// OLD Selection of monster to attack
+		//int rnd = Random.Range(0, _playerMonsters.Count - 1);
+		//Monster monsterToAttack = _playerMonsters[rnd];
+		//GameObject hpBar = GameObject.Find("PlayerMonstersContainer").transform.GetChild(rnd).Find("HealthBar(Clone)").gameObject;
+
+		Monster monsterToAttack = getPlayerMonsterLowestHP();
+
+		// Choose skill to use
+		skills.Reverse(); // Reverse to have the most powerful skills in first
+
+		foreach(Skill skill in skills)
+		{
+			if(skill.getCooldown() == 1)
+			{
+				selectedSkill = skill;
+				break;
+			}
+		}
+		skills.Reverse();
+
+		AttackMonster(monsterToAttack, monsterToAttack.HealthBar);
+	}
+
+	private Monster getPlayerMonsterLowestHP()
+	{
+		Monster lowestHP = _playerMonsters[0]; // Get the first monster
+		foreach(Monster monster in _playerMonsters)
+		{
+			if (monster.getHp() <= lowestHP.getHp()) lowestHP = monster; 
+		}
+		return lowestHP;
 	}
 }

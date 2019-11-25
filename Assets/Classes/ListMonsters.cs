@@ -12,7 +12,7 @@ public static class ListMonsters {
 		skills.Add(new Skill("Petrification", "Skill", 1, 1));
 		skills.Add(new Skill("Peur", "Skill", 3, 1.5));
 
-		monsters.Add(new Monster("Hauntree", "Tank", "Heliamphora", 1000, 100, 10, 60, Deepcopy(skills)));
+		monsters.Add(new Monster("Hauntree", "Tank", "Heliamphora", 1000, 100, 30, 60, Deepcopy(skills)));
 
 		skills.Clear();
 		#endregion

@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class Monster {
 	private string name, role, diet;
 	private int level, experience, maxHp, hp, attack, defense, speed, critRate, critDamage, attackBar;
 	private List<Skill> _skills;
+	private GameObject healthBar;
 
 	public Monster(string nom, string rol, string alim, int pv, int atk, int def, int spd, List<Skill> skills)
 	{
@@ -21,6 +23,7 @@ public class Monster {
 		critDamage = 150;
 		attackBar = 0;
 		_skills = skills;
+		healthBar = null;
 	}
 
 	public string getName() { return name; }
@@ -50,6 +53,8 @@ public class Monster {
 	public void setAttackBar(int atb) { attackBar = atb; }
 
 	public List<Skill> getSkills() { return _skills; }
+
+	public GameObject HealthBar { get => healthBar; set => healthBar = value; }
 
 	override
 	public string ToString()
