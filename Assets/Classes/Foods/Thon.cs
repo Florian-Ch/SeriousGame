@@ -12,6 +12,7 @@ public class Thon : Food
         season = "Toute l'année";
         contains = new List<string>(){"Protéines", "Phosphore", "Sélénium", "Vitamine A", "Vitamine D"};
         bonus = new Dictionary<string, int>() { { "hp", 0 }, { "attack", 0 }, { "defense", 0 }, { "speed", 0 }, { "critRate", 0 }, { "critDamage", 0 } };
+        type = "aliment";
     }
 
     public static Thon Instance

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 public abstract class Food
 {
-    protected string name, description, production, season;
+    protected string name, description, production, season, type;
     protected List<string> contains;
     protected Dictionary<string, int> bonus;
 
@@ -25,6 +25,15 @@ public abstract class Food
             res.Add(kvp.Key, kvp.Value);
         }
         return res;
-
     }
+
+    public string getDescription() { return description; }
+
+    public string getProduction() { return production; }
+
+    public string getSeason() { return season; }
+
+    public List<string> getContains() { return contains; }
+
+    public string getType() { return type; }
 }

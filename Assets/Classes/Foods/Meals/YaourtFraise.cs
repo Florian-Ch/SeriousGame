@@ -13,6 +13,7 @@ public class YaourtFraise : Meal
         contains = new List<string>(){"Glucides"};
         _foods = new List<Food>(){Lait.Instance, Fraise.Instance};
         bonus = new Dictionary<string, int>() { { "hp", 0 }, { "attack", 50 }, { "defense", 0 }, { "speed", 30 }, { "critRate", 10 }, { "critDamage", 50 } };
+        type = "repas";
     }
 
     public static YaourtFraise Instance

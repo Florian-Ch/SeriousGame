@@ -88,6 +88,7 @@
     <Compile Include="Assets\Scripts\InvocationPortal.cs" />
     <Compile Include="Assets\Scripts\LevelSelection.cs" />
     <Compile Include="Assets\Scripts\MainMenu.cs" />
+    <Compile Include="Assets\Scripts\MealCreation.cs" />
     <Compile Include="Assets\Scripts\MonsterBox.cs" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>D:/Florian/Documents/GitHub/SeriousGame/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>

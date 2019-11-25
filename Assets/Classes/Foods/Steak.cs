@@ -12,6 +12,7 @@ public class Steak : Food
         season = "Toute l'année";
         contains = new List<string>(){"Protéines", "Lipides", "Fer", "Zinc", "Sélénium", "Vitamine B3", "Vitamine B12"};
         bonus = new Dictionary<string, int>() { { "hp", 0 }, { "attack", 0 }, { "defense", 0 }, { "speed", 0 }, { "critRate", 0 }, { "critDamage", 0 } };
+        type = "aliment";
     }
 
     public static Steak Instance

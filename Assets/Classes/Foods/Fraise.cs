@@ -12,6 +12,7 @@ public class Fraise : Food
         season = "Avril - Mai - Juin";
         contains = new List<string>(){"Vitamine C", "Antioxydants"};
         bonus = new Dictionary<string, int>() { {"hp", 0 }, { "attack", 0 }, { "defense", 0 }, { "speed", 0 }, { "critRate", 0 }, { "critDamage", 0 } };
+        type = "aliment";
     }
 
     public static Fraise Instance

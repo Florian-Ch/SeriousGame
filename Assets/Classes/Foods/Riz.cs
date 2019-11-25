@@ -12,6 +12,7 @@ public class Riz : Food
         season = "Toute l'année";
         contains = new List<string>(){"Glucides", "Fibres"};
         bonus = new Dictionary<string, int>() { { "hp", 100 }, { "attack", 0 }, { "defense", 10 }, { "speed", 0 }, { "critRate", 0 }, { "critDamage", 0 } };
+        type = "aliment";
     }
 
     public static Riz Instance

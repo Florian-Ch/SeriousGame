@@ -13,6 +13,7 @@ public class Chili : Meal
         contains = new List<string>(){"Protéines", "Glucides"};
         _foods = new List<Food>(){HaricotRouge.Instance, Oignon.Instance, Poivron.Instance, Steak.Instance};
         bonus = new Dictionary<string, int>() { { "hp", 500 }, { "attack", 50 }, { "defense", 30 }, { "speed", 0 }, { "critRate", 10 }, { "critDamage", 50 } };
+        type = "repas";
     }
 
     public static Chili Instance

@@ -17,17 +17,17 @@ public class MainMenu : MonoBehaviour
         {
             Player.setUsername(PlayerUsername);
 
-            Player.addFood(Chili.Instance, 1);
+            Player.addFood(Chili.Instance, 0);
             Player.addFood(Sushi.Instance, 0);
-            Player.addFood(YaourtFraise.Instance, 1);
+            Player.addFood(YaourtFraise.Instance, 0);
 
-            Player.addFood(Fraise.Instance, 0);
-            Player.addFood(HaricotRouge.Instance, 0);
-            Player.addFood(Lait.Instance, 0);
-            Player.addFood(Oignon.Instance, 0);
-            Player.addFood(Poivron.Instance, 0);
+            Player.addFood(Fraise.Instance, 1);
+            Player.addFood(HaricotRouge.Instance, 1);
+            Player.addFood(Lait.Instance, 1);
+            Player.addFood(Oignon.Instance, 1);
+            Player.addFood(Poivron.Instance, 1);
             Player.addFood(Riz.Instance, 1);
-            Player.addFood(Steak.Instance, 0);
+            Player.addFood(Steak.Instance, 1);
             Player.addFood(Thon.Instance, 0);
 
             List<Skill> m1Skills = new List<Skill>();
@@ -79,5 +79,10 @@ public class MainMenu : MonoBehaviour
     public void GoToInvocation()
     {
         SceneManager.LoadScene("InvocationPortal");
+    }
+
+    public void GoToMealCreation()
+    {
+        SceneManager.LoadScene("MealCreation");
     }
 }
