@@ -28,6 +28,8 @@ public class CombatDisplay : MonoBehaviour {
 		playing = false;
 		DisplayMonsters(_playerMonsters, playerMonstersContainer);  // Display player's monsters
 		DisplayMonsters(_ennemies, ennemiesContainer);  // Display ennemy's monsters
+
+		setEventClickOnEnnemiesMonster(); // Set the click event on ennemies monsters
 	}
 
 	// Update is called once per frame
@@ -137,6 +139,7 @@ public class CombatDisplay : MonoBehaviour {
 	private void DisplayMonsters(List<Monster> _monstersList, GameObject parent)
 	{
 		foreach (Transform child in parent.transform) { GameObject.Destroy(child.gameObject); }
+
 		foreach (Monster m in _monstersList)
 		{
 			Sprite sprite = Resources.Load<Sprite>("MonstersSprites/" + m.getName());     // load texture
@@ -144,18 +147,22 @@ public class CombatDisplay : MonoBehaviour {
 			monster.GetComponent<Image>().sprite = sprite;                                // apply texture
 			monster.transform.SetParent(parent.transform);                                // place button at the right place
 			monster.transform.localScale = new Vector3((float)0.9, (float)0.9, 1);        // resize button (sooo huge by default)
+			monster.name = m.getName();
 
+			// Get healthBar
 			GameObject hpBar = Instantiate(healthBar) as GameObject;
 			hpBar.transform.SetParent(monster.transform);
 			hpBar.transform.localScale = new Vector3(1, 1, 1);
 			hpBar.transform.position = new Vector3(0, 0.75f, 0); // 1 = 62 ?! so 0.75 should be around 46
 
+			// Get attackBar
 			GameObject atb = Instantiate(attackBar) as GameObject;
 			atb.transform.SetParent(monster.transform);
 			atb.transform.localScale = new Vector3(1, 1, 1);
 			atb.transform.position = new Vector3(0, 0.70f, 0); // 1 = 62 ?! so 0.75 should be around 46
 
-			monster.GetComponent<Button>().onClick.AddListener(() => AttackMonster(m, hpBar));
+			// ! Depreciate (bug, we can kil our own monster)
+			// monster.GetComponent<Button>().onClick.AddListener(() => AttackMonster(m, hpBar));
 		}
 	}
 
@@ -306,5 +313,20 @@ public class CombatDisplay : MonoBehaviour {
 	public void CloseCdAlert()
 	{
 		cdContainer.SetActive(false);
+	}
+
+	private void setEventClickOnEnnemiesMonster()
+	{
+		GameObject ennemiesContainer = GameObject.Find("EnnemiesContainer");
+
+		foreach (Monster monster in _ennemies)
+		{
+			// Get gameobject of monster
+			GameObject monster_gameobject = ennemiesContainer.transform.Find(monster.getName()).gameObject;
+			// Get HP bar
+			GameObject healthBar = monster_gameobject.transform.Find("HealthBar(Clone)").gameObject;
+
+			monster_gameobject.GetComponent<Button>().onClick.AddListener(() => AttackMonster(monster, healthBar));
+		}
 	}
 }
