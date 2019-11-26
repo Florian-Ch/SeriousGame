@@ -23,7 +23,7 @@ public static class ListMonsters {
 		skills.Add(new Skill("Enervement", "Skill", 2, 1.2));
 		skills.Add(new Skill("Commander", "Skill", 5, 3));
 
-		monsters.Add(new Monster("Asterios", "Support", "Nepenthes", 1000, 70, 40, 70, Deepcopy(skills)));
+		monsters.Add(new Monster("Asterios", "Support", "Nepenthes", 1000, 90, 50, 70, Deepcopy(skills)));
 
 		skills.Clear();
 		#endregion
@@ -33,7 +33,7 @@ public static class ListMonsters {
 	{
 		foreach (Monster m in monsters)
 		{
-			if (m.getName() == name) return m;
+			if (m.getName() == name) return m.clone();
 		}
 		return null;
 	}

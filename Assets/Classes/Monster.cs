@@ -52,7 +52,7 @@ public class Monster {
 
 	public void setAttackBar(int atb) { attackBar = atb; }
 
-	public List<Skill> getSkills() { return _skills; }
+	public List<Skill> Skills { get => _skills; set => _skills = value; }
 
 	public GameObject HealthBar { get => healthBar; set => healthBar = value; }
 
@@ -60,5 +60,10 @@ public class Monster {
 	public string ToString()
 	{
 		return "Monstre : " + name;
+	}
+
+	public Monster clone()
+	{
+		return new Monster(name, role, diet, hp, attack, defense, speed, _skills);
 	}
 }

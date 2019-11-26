@@ -19,6 +19,7 @@ public class CombatDisplay : MonoBehaviour {
 	// Start is called before the first frame update
 	void Start()
 	{
+		// Init interface
 		skillInfo.SetActive(false);
 		endContainer.SetActive(false);
 		cdContainer.SetActive(false);
@@ -30,6 +31,8 @@ public class CombatDisplay : MonoBehaviour {
 		DisplayMonsters(_ennemies, ennemiesContainer);  // Display ennemy's monsters
 
 		setEventClickOnEnnemiesMonster(); // Set the click event on ennemies monsters
+
+		initPlayersMonsters();
 	}
 
 	// Update is called once per frame
@@ -46,7 +49,7 @@ public class CombatDisplay : MonoBehaviour {
 			{
 				if (isPlayerTurn)   // Player turn
 				{
-					SelectSkill(monsterPlaying.getSkills()[0]);
+					SelectSkill(monsterPlaying.Skills[0]);
 					playing = true;
 				}
 				else                // Ennemy turn, AI
@@ -69,7 +72,7 @@ public class CombatDisplay : MonoBehaviour {
 		{
 			selectedSkill = s;
 			foreach (Transform child in skillsContainer.transform) { GameObject.Destroy(child.gameObject); }
-			foreach (Skill skill in monsterPlaying.getSkills())
+			foreach (Skill skill in monsterPlaying.Skills)
 			{
 				Sprite sprite;
 				if (skill.Equals(s))
@@ -201,7 +204,7 @@ public class CombatDisplay : MonoBehaviour {
 		Transform b = atb.transform.Find("Bar");
 		float atbRatio = (float)m.getAttackBar() / 1000;
 		b.localScale = new Vector3(atbRatio, 1f);
-		foreach (Skill s in monsterPlaying.getSkills())
+		foreach (Skill s in monsterPlaying.Skills)
 		{
 			int cd = s.getCooldown();
 			if (cd > 1)
@@ -317,7 +320,7 @@ public class CombatDisplay : MonoBehaviour {
 	
 	private void ennemiesTurn()
 	{
-		List<Skill> skills = monsterPlaying.getSkills(); // Get skills of current monster
+		List<Skill> skills = monsterPlaying.Skills; // Get skills of current monster
 		
 		// OLD Selection of monster to attack
 		//int rnd = Random.Range(0, _playerMonsters.Count - 1);
@@ -350,5 +353,19 @@ public class CombatDisplay : MonoBehaviour {
 			if (monster.getHp() <= lowestHP.getHp()) lowestHP = monster; 
 		}
 		return lowestHP;
+	}
+
+	private void initPlayersMonsters()
+	{
+		foreach(Monster monster in _playerMonsters)
+		{
+			// Reset HP
+			monster.setHp(monster.getMaxHp());
+			// Reset Cooldown 
+			foreach(Skill skill in monster.Skills)
+			{
+				skill.setCooldown(1);
+			}
+		}
 	}
 }
