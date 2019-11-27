@@ -15,6 +15,9 @@ public class MainMenu : MonoBehaviour
         // create fake data for test
         if(Player.getUsername() != PlayerUsername)  // only create data one the first load
         {
+            // Initialize list of monster
+            ListMonsters.Init();
+
             Player.setUsername(PlayerUsername);
 
             Player.addFood(Chili.Instance, 0);

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using UnityEngine;
@@ -38,7 +39,7 @@ public class LevelSelection : MonoBehaviour
     {
         Combat.setNumberOfPlayerMonsters(1);
 
-        // setup ennemies
+        // Setup ennemies
         List<Monster> _ennemies = new List<Monster>();
         List<Skill> m1Skills = new List<Skill>();
         Skill m1s1 = new Skill("Petrification", "Skill", 1, 1);
@@ -50,5 +51,20 @@ public class LevelSelection : MonoBehaviour
         Combat.setEnnemies(_ennemies);
 
         SceneManager.LoadScene("CombatMonsterSelection");
+    }
+
+    public void stage1_1() {
+        Combat.setNumberOfPlayerMonsters(1);
+
+        // Setup ennemies
+        List<Monster> _ennemies = new List<Monster>();
+
+        _ennemies.Add(ListMonsters.get("Hauntree"));
+        Combat.setEnnemies(_ennemies);
+        Console.WriteLine(_ennemies[0].getSkills()[0]);
+
+        SceneManager.LoadScene("CombatMonsterSelection");
+
+
     }
 }
