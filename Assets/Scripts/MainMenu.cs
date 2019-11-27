@@ -1,8 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine.SceneManagement;
+﻿using UnityEngine.SceneManagement;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 public class MainMenu : MonoBehaviour
 {
@@ -33,24 +32,12 @@ public class MainMenu : MonoBehaviour
             Player.addFood(Steak.Instance, 1);
             Player.addFood(Thon.Instance, 0);
 
-            List<Skill> m1Skills = new List<Skill>();
-            Skill m1s1 = new Skill("Coup de boule", "Skill", 1, 1);
-            Skill m1s2 = new Skill("Enervement", "Skill", 2, 1.2);
-            Skill m1s3 = new Skill("Commander", "Skill", 5, 3);
-            m1Skills.Add(m1s1);
-            m1Skills.Add(m1s2);
-            m1Skills.Add(m1s3);
-            Monster m1 = new Monster("Asterios", "Support", "Nepenthes", 1000, 70, 40, 70, m1Skills);
-            Player.addMonster(m1);
+            // Set monster player
+			Player.addMonster(ListMonsters.get("Asterios"));
+			Player.addMonster(ListMonsters.get("Hauntree"));
 
-            List<Skill> m2Skills = new List<Skill>();
-            Skill m2s1 = new Skill("Petrification", "Skill", 1, 1);
-            Skill m2s2 = new Skill("Peur", "Skill", 3, 1.5);
-            m2Skills.Add(m2s1);
-            m2Skills.Add(m2s2);
-            Monster m2 = new Monster("Hauntree", "Tank", "Heliamphora", 1200, 50, 100, 50, m2Skills);
-            Player.addMonster(m2);
-            Player.defineMainMonster(m1);
+			// Why we define a main monster ?
+			Player.defineMainMonster(ListMonsters.get("Hauntree"));
 
             // List of food interactions, not fake MUST be created at start
 

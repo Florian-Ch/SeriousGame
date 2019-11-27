@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 public static class Player
 {
@@ -15,20 +14,20 @@ public static class Player
         username = name;
     }
 
-    public static string getUsername()
-    {
-        return username;
-    }
+	public static string getUsername()
+	{
+		return username;
+	}
 
-    public static void addMonster(Monster m)
-    {
-        _monsters.Add(m);
-    }
+	public static void addMonster(Monster m)
+	{
+		_monsters.Add(m);
+	}
 
-    public static List<Monster> getMonsters()
-    {
-        return _monsters;
-    }
+	public static List<Monster> getMonsters()
+	{
+		return _monsters;
+	}
 
     public static void defineMainMonster(Monster m)
     {

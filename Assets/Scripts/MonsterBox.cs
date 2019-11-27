@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -11,15 +10,15 @@ public class MonsterBox : MonoBehaviour
     private List<Monster> _monsters;
     private Monster selectedMonster;
 
-    private GameObject nameDisplay;
-    private GameObject roleDisplay;
-    private GameObject alimDisplay;
-    private GameObject hpDisplay;
-    private GameObject attackDisplay;
-    private GameObject defDisplay;
-    private GameObject speedDisplay;
-    private GameObject critRateDisplay;
-    private GameObject critDmgDisplay;
+	private GameObject nameDisplay;
+	private GameObject roleDisplay;
+	private GameObject alimDisplay;
+	private GameObject hpDisplay;
+	private GameObject attackDisplay;
+	private GameObject defDisplay;
+	private GameObject speedDisplay;
+	private GameObject critRateDisplay;
+	private GameObject critDmgDisplay;
 
     // Start is called before the first frame update
     void Start()
@@ -28,15 +27,16 @@ public class MonsterBox : MonoBehaviour
 		foodDisplay.SetActive(false);
         _monsters = Player.getMonsters();
 
-        nameDisplay = GameObject.Find("MonsterName");
-        roleDisplay = GameObject.Find("Role");
-        alimDisplay = GameObject.Find("Alim");
-        hpDisplay = GameObject.Find("Hp");
-        attackDisplay = GameObject.Find("Attack");
-        defDisplay = GameObject.Find("Def");
-        speedDisplay = GameObject.Find("Speed");
-        critRateDisplay = GameObject.Find("CritRate");
-        critDmgDisplay = GameObject.Find("CritDmg");
+		// Get all gameobjects
+		nameDisplay = GameObject.Find("MonsterName");
+		roleDisplay = GameObject.Find("Role");
+		alimDisplay = GameObject.Find("Alim");
+		hpDisplay = GameObject.Find("Hp");
+		attackDisplay = GameObject.Find("Attack");
+		defDisplay = GameObject.Find("Def");
+		speedDisplay = GameObject.Find("Speed");
+		critRateDisplay = GameObject.Find("CritRate");
+		critDmgDisplay = GameObject.Find("CritDmg");
 
         // create monsters list
         foreach (Monster m in _monsters)
@@ -59,16 +59,10 @@ public class MonsterBox : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    public void Return()
-    {
-        SceneManager.LoadScene("MainMenu");
-    }
+	public void Return()
+	{
+		SceneManager.LoadScene("MainMenu");
+	}
 
     private void DisplayMonsterData(Monster m)
     {
