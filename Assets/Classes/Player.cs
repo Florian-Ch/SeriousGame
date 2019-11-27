@@ -1,33 +1,33 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 public static class Player
 {
     private static string username;
     private static List<Monster> _monsters = new List<Monster>();
-    private static int numberMonstersMax;
+    private static int numberMonstersMax, invocationPieces, gold;
     private static Monster mainMonster;
     private static Dictionary<Food, int> _foods = new Dictionary<Food, int>();
 
+   
     public static void setUsername(string name)
     {
         username = name;
     }
 
-    public static string getUsername()
-    {
-        return username;
-    }
+	public static string getUsername()
+	{
+		return username;
+	}
 
-    public static void addMonster(Monster m)
-    {
-        _monsters.Add(m);
-    }
+	public static void addMonster(Monster m)
+	{
+		_monsters.Add(m);
+	}
 
-    public static List<Monster> getMonsters()
-    {
-        return _monsters;
-    }
+	public static List<Monster> getMonsters()
+	{
+		return _monsters;
+	}
 
     public static void defineMainMonster(Monster m)
     {
@@ -64,4 +64,9 @@ public static class Player
     {
         return _foods;
     }
+
+    public static int InvocationPieces { get => invocationPieces; set => invocationPieces = value; }
+
+    public static int Gold { get => gold; set => gold = value; }
+
 }

@@ -11,6 +11,8 @@ public class Poivron : Food
         production = "Chine, Mexique";
         season = "Juin à Septembre";
         contains = new List<string>(){"Vitamine C", "Vitamine B6", "Bêta-carotène", "Potassium", "Antioxydants"};
+        bonus = new Dictionary<string, int>() { { "hp", 0 }, { "attack", 0 }, { "defense", 0 }, { "speed", 0 }, { "critRate", 0 }, { "critDamage", 0 } };
+        type = "aliment";
     }
 
     public static Poivron Instance
