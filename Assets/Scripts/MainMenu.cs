@@ -7,6 +7,7 @@ public class MainMenu : MonoBehaviour
 {
     public string PlayerUsername;
     public Text username, coinNumber, gemsNumber;
+    public Image mainMonsterSprite;
 
     // Start is called before the first frame update
     void Start()
@@ -33,11 +34,10 @@ public class MainMenu : MonoBehaviour
             Player.addFood(Thon.Instance, 0);
 
             // Set monster player
-			Player.addMonster(ListMonsters.get("Asterios"));
-			Player.addMonster(ListMonsters.get("Hauntree"));
+			Player.addMonster(ListMonsters.get("Asterios").clone());
+			Player.addMonster(ListMonsters.get("Hauntree").clone());
 
-			// Why we define a main monster ?
-			Player.defineMainMonster(ListMonsters.get("Hauntree"));
+			Player.defineMainMonster(Player.getMonsters()[0]);
 
             // List of food interactions, not fake MUST be created at start
 
@@ -50,6 +50,7 @@ public class MainMenu : MonoBehaviour
         username.text = Player.getUsername();
         coinNumber.text = Player.Gold.ToString();
         gemsNumber.text = Player.Gems.ToString();
+        mainMonsterSprite.sprite = Resources.Load<Sprite>("MonstersSprites/" + Player.getMainMonster().getName());
     }
 
     // Update is called once per frame

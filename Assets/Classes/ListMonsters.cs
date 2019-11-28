@@ -44,7 +44,8 @@ public static class ListMonsters {
 		foreach (Skill skill in skills)
 		{
 			copy.Add(skill);
-		}
+            //copy.Add(new Skill(skill.getName(), skill.getIcon(), skill.getInitialCooldown(), skill.getMultiplier()));
+        }
 		return copy;
 	}
 }

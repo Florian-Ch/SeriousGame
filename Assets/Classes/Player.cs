@@ -34,6 +34,8 @@ public static class Player
         mainMonster = m;
     }
 
+    public static Monster getMainMonster() { return mainMonster; }
+
     public static void addFood(Food f, int quantity)
     {
         if (_foods.ContainsKey(f))

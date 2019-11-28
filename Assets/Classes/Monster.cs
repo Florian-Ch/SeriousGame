@@ -45,6 +45,8 @@ public class Monster
 
     public int getMaxHp() { return maxHp; }
 
+    public void setMaxHp(int pv) { maxHp = pv; }
+
     public int getHp() { return hp; }
 
     public void setHp(int pv) { hp = pv; }

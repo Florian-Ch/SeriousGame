@@ -6,7 +6,7 @@ using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 public class CombatDisplay : MonoBehaviour {
-	public GameObject playerMonstersContainer, ennemiesContainer, skillsContainer, monsterButtonPrefab, endContainer, cdContainer, healthBar, attackBar, skillInfo, monsterEndFightContainer, monsterEndFightDisplay;
+	public GameObject playerMonstersContainer, ennemiesContainer, skillsContainer, monsterButtonPrefab, endContainer, cdContainer, healthBar, attackBar, skillInfo, monsterEndFightContainer, monsterEndFightDisplay, pauseMenu;
 	public Text endText, cdText, goldNumber, gemsNumber;
 
 	private List<Monster> _playerMonsters;
@@ -19,7 +19,8 @@ public class CombatDisplay : MonoBehaviour {
 	// Start is called before the first frame update
 	void Start()
 	{
-		// Init interface
+        // Init interface
+        pauseMenu.SetActive(false);
 		skillInfo.SetActive(false);
 		endContainer.SetActive(false);
 		cdContainer.SetActive(false);
@@ -30,7 +31,7 @@ public class CombatDisplay : MonoBehaviour {
 		DisplayMonsters(_playerMonsters, playerMonstersContainer);  // Display player's monsters
 		DisplayMonsters(_ennemies, ennemiesContainer);  // Display ennemy's monsters
 
-		setEventClickOnEnnemiesMonster(); // Set the click event on ennemies monsters
+		// setEventClickOnEnnemiesMonster(); // Set the click event on ennemies monsters
 
 		initPlayersMonsters();
 	}
@@ -65,7 +66,7 @@ public class CombatDisplay : MonoBehaviour {
 		int cd = s.getCooldown();
 		if (cd > 1)     // cd = 1 means skill is available
 		{
-			cdContainer.SetActive(true);
+            cdContainer.SetActive(true);
 			cdText.text = "La compétence n'est pas prête ! Patiente encore " + (cd - 1) + " tour(s)";
 		}
 		else
@@ -152,7 +153,7 @@ public class CombatDisplay : MonoBehaviour {
 			atb.transform.position = new Vector3(0, 0.70f, 0); // 1 = 62 ?! so 0.75 should be around 46
 
 			// ! Depreciate (bug, we can kil our own monster)
-			// monster.GetComponent<Button>().onClick.AddListener(() => AttackMonster(m, hpBar));
+			monster.GetComponent<Button>().onClick.AddListener(() => AttackMonster(m, m.HealthBar));
 		}
 	}
 
@@ -167,7 +168,7 @@ public class CombatDisplay : MonoBehaviour {
 
 		int currentHp = m.getHp();
 		m.setHp(currentHp - reducedDmg);
-
+        Debug.Log("raw : " + rawDmg + " reduced : " + reducedDmg + " previous hp : " + currentHp + " hp : " + m.getHp());
 		// check if monster dies
 		if (m.getHp() <= 0)
 		{
@@ -175,7 +176,8 @@ public class CombatDisplay : MonoBehaviour {
 			{
 				_ennemies.Remove(m);
 				DisplayMonsters(_ennemies, ennemiesContainer);
-			}
+                // setEventClickOnEnnemiesMonster();
+            }
 			else
 			{
 				_playerMonsters.Remove(m);
@@ -310,6 +312,8 @@ public class CombatDisplay : MonoBehaviour {
                 xpGained.text = "+ " + Combat.MonsterExperienceReward + " xp";
                 if (m.HasLevelUp == false)
                     display.transform.Find("LevelUpImage").gameObject.SetActive(false);
+                else
+                    m.HasLevelUp = false;
             }
 
             goldNumber.text = Combat.GoldReward.ToString();
@@ -327,10 +331,10 @@ public class CombatDisplay : MonoBehaviour {
 
 	public void CloseCdAlert()
 	{
-		cdContainer.SetActive(false);
+        cdContainer.SetActive(false);
 	}
 
-	private void setEventClickOnEnnemiesMonster()
+	/*private void setEventClickOnEnnemiesMonster()
 	{
 		GameObject ennemiesContainer = GameObject.Find("EnnemiesContainer");
 
@@ -341,7 +345,7 @@ public class CombatDisplay : MonoBehaviour {
 
 			monster_gameobject.GetComponent<Button>().onClick.AddListener(() => AttackMonster(monster, monster.HealthBar));
 		}
-	}
+	}*/
 	
 	private void ennemiesTurn()
 	{
@@ -393,4 +397,19 @@ public class CombatDisplay : MonoBehaviour {
 			}
 		}
 	}
+
+    public void OpenPauseMenu()
+    {
+        pauseMenu.SetActive(true);
+    }
+
+    public void ClosePauseMenu()
+    {
+        pauseMenu.SetActive(false);
+    }
+
+    public void Restart()
+    {
+
+    }
 }

@@ -33,14 +33,14 @@ public class LevelSelection : MonoBehaviour {
 		// Setup ennemies
 		List<Monster> _ennemies = new List<Monster>();
 
-		_ennemies.Add(ListMonsters.get("Hauntree"));
+		_ennemies.Add(ListMonsters.get("Hauntree").clone());
         _ennemies[0].setHp(100);
 		Combat.setEnnemies(_ennemies);
 
         // Setup rewards
-        Combat.MonsterExperienceReward = 1500;
+        Combat.MonsterExperienceReward = 500;
         Combat.GoldReward = 100;
-        Combat.GemReward = 1;
+        Combat.GemReward = 0;
 
         SceneManager.LoadScene("CombatMonsterSelection");
 	}
@@ -51,12 +51,16 @@ public class LevelSelection : MonoBehaviour {
 
 		// Setup ennemies
 		List<Monster> _ennemies = new List<Monster>();
-		_ennemies.Add(ListMonsters.get("Hauntree"));
-		_ennemies.Add(ListMonsters.get("Asterios"));
-		Combat.setEnnemies(_ennemies);
+		_ennemies.Add(ListMonsters.get("Hauntree").clone());
+		_ennemies.Add(ListMonsters.get("Asterios").clone());
+        _ennemies[0].setHp(150);
+        _ennemies[0].setMaxHp(150);
+        _ennemies[1].setHp(150);
+        _ennemies[1].setMaxHp(150);
+        Combat.setEnnemies(_ennemies);
 
         // Setup rewards
-        Combat.MonsterExperienceReward = 100;
+        Combat.MonsterExperienceReward = 900;
         Combat.GoldReward = 200;
         Combat.GemReward = 1;
 
