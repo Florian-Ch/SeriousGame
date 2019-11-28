@@ -1,11 +1,16 @@
 ﻿public class Skill
 {
+    private static int idCounter = 0;
 	private string name, icon;
-	private int initialCooldown, cooldown, nbTouchedEnnemies;
+	private int initialCooldown, cooldown, nbTouchedEnnemies, id;
 	private double multiplier;
 
-	public Skill(string _name, string _icon, int cd, double dmg, int nbTouchedennemies = 1)
+    public int Id { get => id; }
+
+    public Skill(string _name, string _icon, int cd, double dmg, int nbTouchedennemies = 1)
 	{
+        idCounter++;
+        id = idCounter;
 		name = _name;
 		icon = _icon;
 		initialCooldown = cd;

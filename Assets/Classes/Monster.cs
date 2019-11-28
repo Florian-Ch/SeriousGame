@@ -166,6 +166,6 @@ public class Monster
 
 	public Monster clone()
 	{
-		return new Monster(name, role, diet, hp, attack, defense, speed, _skills);
+		return new Monster(name, role, diet, hp, attack, defense, speed, ListMonsters.Deepcopy(_skills));
 	}
 }

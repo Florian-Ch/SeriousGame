@@ -20,20 +20,15 @@ public class CombatMonsterSelection : MonoBehaviour {
 		noSlotsPopup.SetActive(false);
 		numberOfPlayerMonsters = Combat.getNumberOfPlayerMonsters();
 		_playerMonsters = new List<Monster>();
+        _monsters = new List<Monster>();
+        foreach (Monster m in Player.getMonsters())
+        {
+            _monsters.Add(m);
+        }
 
-		_monsters = Player.getMonsters();
-		// Create player's monsters list
-		foreach (Monster m in _monsters)
-		{
-			Sprite sprite = Resources.Load<Sprite>("MonstersThumbnails/" + m.getName());    // load texture
-			GameObject thumbnail = Instantiate(monsterButtonPrefab) as GameObject;          // create button
-			thumbnail.GetComponent<Image>().sprite = sprite;                                // apply texture
-			thumbnail.transform.SetParent(monstersListContainer.transform);                 // place button at the right place
-			thumbnail.transform.localScale = new Vector3(1, 1, 1);                          // resize button (sooo huge by default)
-			thumbnail.GetComponent<Button>().onClick.AddListener(() => AddMonsterToFight(m));
-		}
+        DisplayMonstersList();
 
-		DisplayPlayerMonsters();
+        DisplayPlayerMonsters();
 
 		// Display ennemies monsters
 		List<Monster> _ennemies = Combat.getEnnemies();
@@ -52,12 +47,29 @@ public class CombatMonsterSelection : MonoBehaviour {
 		SceneManager.LoadScene("LevelSelection");
 	}
 
+    public void DisplayMonstersList()
+    {
+        foreach (Transform child in monstersListContainer.transform) { GameObject.Destroy(child.gameObject); }
+        // Create player's monsters list
+        foreach (Monster m in _monsters)
+        {
+            Sprite sprite = Resources.Load<Sprite>("MonstersThumbnails/" + m.getName());    // load texture
+            GameObject thumbnail = Instantiate(monsterButtonPrefab) as GameObject;          // create button
+            thumbnail.GetComponent<Image>().sprite = sprite;                                // apply texture
+            thumbnail.transform.SetParent(monstersListContainer.transform);                 // place button at the right place
+            thumbnail.transform.localScale = new Vector3(1, 1, 1);                          // resize button (sooo huge by default)
+            thumbnail.GetComponent<Button>().onClick.AddListener(() => AddMonsterToFight(m));
+        }
+    }
+
 	public void AddMonsterToFight(Monster m)
 	{
 		if (_playerMonsters.Count < numberOfPlayerMonsters)
 		{
-			_playerMonsters.Add(m);
+			_playerMonsters.Add(m.clone());
 			DisplayPlayerMonsters();
+            _monsters.Remove(m);
+            DisplayMonstersList();
 		}
 		else
 		{
@@ -71,7 +83,9 @@ public class CombatMonsterSelection : MonoBehaviour {
 	{
 		_playerMonsters.Remove(m);
 		DisplayPlayerMonsters();
-	}
+        _monsters.Add(m);
+        DisplayMonstersList();
+    }
 
 	public void DisplayPlayerMonsters()
 	{

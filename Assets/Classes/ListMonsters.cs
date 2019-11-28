@@ -38,7 +38,7 @@ public static class ListMonsters {
 		return null;
 	}
 
-	private static List<Skill> Deepcopy(List<Skill> skills)
+	public static List<Skill> Deepcopy(List<Skill> skills)
 	{
 		List<Skill> copy = new List<Skill>();
 		foreach (Skill skill in skills)

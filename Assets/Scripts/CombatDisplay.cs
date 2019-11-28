@@ -9,7 +9,7 @@ public class CombatDisplay : MonoBehaviour {
 	public GameObject playerMonstersContainer, ennemiesContainer, skillsContainer, monsterButtonPrefab, endContainer, cdContainer, healthBar, attackBar, skillInfo, monsterEndFightContainer, monsterEndFightDisplay, pauseMenu;
 	public Text endText, cdText, goldNumber, gemsNumber;
 
-	private List<Monster> _playerMonsters;
+	private List<Monster> _playerMonsters, _combatPlayerMonsters, _combatEnnemies;
 	private List<Monster> _ennemies;
 	private Monster monsterPlaying;
 	private bool isPlayerTurn;
@@ -19,6 +19,12 @@ public class CombatDisplay : MonoBehaviour {
 	// Start is called before the first frame update
 	void Start()
 	{
+        // Memorize initial combat setup
+        _combatPlayerMonsters = new List<Monster>();
+        foreach(Monster m in Combat.getPlayerMonsters()) { _combatPlayerMonsters.Add(m.clone()); }
+        _combatEnnemies = new List<Monster>();
+        foreach (Monster m in Combat.getEnnemies()) { _combatEnnemies.Add(m.clone()); }
+
         // Init interface
         pauseMenu.SetActive(false);
 		skillInfo.SetActive(false);
@@ -159,7 +165,8 @@ public class CombatDisplay : MonoBehaviour {
 
 	private void AttackMonster(Monster m, GameObject hpBar)
 	{
-		int critDmg = 100;
+        Debug.Log("monstre utilise skill id " + selectedSkill.Id);
+        int critDmg = 100;
 		if (Random.Range(0, 100) <= monsterPlaying.getCritRate())
 			critDmg = monsterPlaying.getCritDmg();
 		double rawDmg = (selectedSkill.getMultiplier() * monsterPlaying.getAttack()) * (critDmg / 100);
@@ -168,7 +175,7 @@ public class CombatDisplay : MonoBehaviour {
 
 		int currentHp = m.getHp();
 		m.setHp(currentHp - reducedDmg);
-        Debug.Log("raw : " + rawDmg + " reduced : " + reducedDmg + " previous hp : " + currentHp + " hp : " + m.getHp());
+        // Debug.Log("raw : " + rawDmg + " reduced : " + reducedDmg + " previous hp : " + currentHp + " hp : " + m.getHp());
 		// check if monster dies
 		if (m.getHp() <= 0)
 		{
@@ -369,7 +376,7 @@ public class CombatDisplay : MonoBehaviour {
 				break;
 			}
 		}
-		skills.Reverse();
+        skills.Reverse();
 
 		AttackMonster(monsterToAttack, monsterToAttack.HealthBar);
 	}
@@ -410,6 +417,8 @@ public class CombatDisplay : MonoBehaviour {
 
     public void Restart()
     {
-
+        Combat.setEnnemies(_combatEnnemies);
+        Combat.setPlayerMonsters(_combatPlayerMonsters);
+        SceneManager.LoadScene("CombatDisplay");
     }
 }

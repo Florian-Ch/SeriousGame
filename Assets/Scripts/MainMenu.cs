@@ -34,8 +34,8 @@ public class MainMenu : MonoBehaviour
             Player.addFood(Thon.Instance, 0);
 
             // Set monster player
-			Player.addMonster(ListMonsters.get("Asterios").clone());
-			Player.addMonster(ListMonsters.get("Hauntree").clone());
+			Player.addMonster(ListMonsters.get("Asterios"));
+			Player.addMonster(ListMonsters.get("Hauntree"));
 
 			Player.defineMainMonster(Player.getMonsters()[0]);
 
