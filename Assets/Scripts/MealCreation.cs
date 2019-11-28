@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class MealCreation : MonoBehaviour
 {
     public GameObject monsterButtonPrefab, foodListContainer, counterDisplay, craftableMealsListContainer, mealFoodListContainer;
+    public Text mealName;
 
     private GameObject foodName, foodDescription, foodProduction, foodSeason, foodContains;
     private List<Meal> craftableMeals = new List<Meal>();
@@ -152,6 +153,7 @@ public class MealCreation : MonoBehaviour
         foreach (Transform child in mealFoodListContainer.transform) { GameObject.Destroy(child.gameObject); }
         if (craftableMeals.Count > 0)
         {
+            mealName.text = m.getName();
             foreach (Food f in m.getFoodList())
             {
                 Sprite sprite = Resources.Load<Sprite>("FoodSprites/" + f.getName().Replace(' ', '_'));    // load texture
@@ -183,6 +185,7 @@ public class MealCreation : MonoBehaviour
         {
             foreach (Transform child in mealFoodListContainer.transform) { GameObject.Destroy(child.gameObject); }
             foreach (Transform child in craftableMealsListContainer.transform) { GameObject.Destroy(child.gameObject); }
+            mealName.text = "Pas de repas craftable actuellement";
         }
         DisplayFoodList();
         foreach (Food f in Player.getFoodDico().Keys)

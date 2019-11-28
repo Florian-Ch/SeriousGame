@@ -5,11 +5,12 @@ using UnityEngine;
 public class Monster
 {
     private string name, role, diet;
-    private int level, experience, maxHp, hp, attack, defense, speed, critRate, critDamage, attackBar, foodBonusMultiplier;
+    private int level, maxLevel, experience, maxHp, hp, attack, defense, speed, critRate, critDamage, attackBar, foodBonusMultiplier;
     private List<Skill> _skills;
     private Food[] _foods;
     Dictionary<string, int> bonusStats;
     private GameObject healthBar;
+    private bool hasLevelUp = false;
 
     public Monster(string nom, string rol, string alim, int pv, int atk, int def, int spd, List<Skill> skills)
     {
@@ -17,6 +18,7 @@ public class Monster
         role = rol;
         diet = alim;
         level = 1;
+        maxLevel = 50;
         experience = 0;
         maxHp = pv;
         hp = pv;
@@ -33,33 +35,35 @@ public class Monster
         healthBar = null;
     }
 
-	public string getName() { return name; }
+    public string getName() { return name; }
 
-	public string getRole() { return role; }
+    public string getRole() { return role; }
 
-	public string getDiet() { return diet; }
+    public string getDiet() { return diet; }
 
-	public int getMaxHp() { return maxHp; }
+    public int getLevel() { return level; }
 
-	public int getHp() { return hp; }
+    public int getMaxHp() { return maxHp; }
 
-	public void setHp(int pv) { hp = pv; }
+    public int getHp() { return hp; }
 
-	public int getAttack() { return attack; }
+    public void setHp(int pv) { hp = pv; }
 
-	public int getDef() { return defense; }
+    public int getAttack() { return attack; }
 
-	public int getSpeed() { return speed; }
+    public int getDef() { return defense; }
 
-	public int getCritRate() { return critRate; }
+    public int getSpeed() { return speed; }
 
-	public int getCritDmg() { return critDamage; }
+    public int getCritRate() { return critRate; }
 
-	public int getAttackBar() { return attackBar; }
+    public int getCritDmg() { return critDamage; }
 
-	public void setAttackBar(int atb) { attackBar = atb; }
+    public int getAttackBar() { return attackBar; }
 
-	public List<Skill> Skills { get => _skills; set => _skills = value; }
+    public void setAttackBar(int atb) { attackBar = atb; }
+
+    public List<Skill> Skills { get => _skills; set => _skills = value; }
 
     public bool addFood(Food f)
     {
@@ -82,6 +86,36 @@ public class Monster
         }
         return res;
     }
+
+    public int Experience{ get => experience; 
+        set 
+        { 
+            experience = value;
+            if (experience >= 1000)
+            {
+                if (LevelUp())
+                {
+                    Experience -= 1000;
+                }
+            }
+        } 
+    }
+
+    private bool LevelUp()
+    {
+        if(level == maxLevel)
+        {
+            return false;
+        }
+        else
+        {
+            hasLevelUp = true;
+            level++;
+            return true;
+        }
+    }
+
+    public bool HasLevelUp { get => hasLevelUp; set => hasLevelUp = value; }
 
     public void removeFood(Food f)
     {

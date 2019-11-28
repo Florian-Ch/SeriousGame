@@ -11,9 +11,10 @@ public class MonsterBox : MonoBehaviour
     private Monster selectedMonster;
 
 	private GameObject nameDisplay;
-	private GameObject roleDisplay;
-	private GameObject alimDisplay;
-	private GameObject hpDisplay;
+	private GameObject roleDisplay;    
+    private GameObject alimDisplay;
+    private GameObject levelDisplay;
+    private GameObject hpDisplay;
 	private GameObject attackDisplay;
 	private GameObject defDisplay;
 	private GameObject speedDisplay;
@@ -30,8 +31,9 @@ public class MonsterBox : MonoBehaviour
 		// Get all gameobjects
 		nameDisplay = GameObject.Find("MonsterName");
 		roleDisplay = GameObject.Find("Role");
-		alimDisplay = GameObject.Find("Alim");
-		hpDisplay = GameObject.Find("Hp");
+        alimDisplay = GameObject.Find("Alim");
+        levelDisplay = GameObject.Find("Level");
+        hpDisplay = GameObject.Find("Hp");
 		attackDisplay = GameObject.Find("Attack");
 		defDisplay = GameObject.Find("Def");
 		speedDisplay = GameObject.Find("Speed");
@@ -76,6 +78,7 @@ public class MonsterBox : MonoBehaviour
         nameDisplay.GetComponent<Text>().text = m.getName();
         roleDisplay.GetComponent<Text>().text = m.getRole();
         alimDisplay.GetComponent<Text>().text = m.getDiet();
+        levelDisplay.GetComponent<Text>().text = m.getLevel().ToString();
         hpDisplay.GetComponent<Text>().text = m.getMaxHp().ToString();
         attackDisplay.GetComponent<Text>().text = m.getAttack().ToString();
         defDisplay.GetComponent<Text>().text = m.getDef().ToString();

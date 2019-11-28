@@ -6,7 +6,7 @@ using System.Collections.Generic;
 public class MainMenu : MonoBehaviour
 {
     public string PlayerUsername;
-    public Text username;
+    public Text username, coinNumber, gemsNumber;
 
     // Start is called before the first frame update
     void Start()
@@ -48,6 +48,8 @@ public class MainMenu : MonoBehaviour
         }
         //END fake data
         username.text = Player.getUsername();
+        coinNumber.text = Player.Gold.ToString();
+        gemsNumber.text = Player.Gems.ToString();
     }
 
     // Update is called once per frame

@@ -4,7 +4,7 @@ public static class Player
 {
     private static string username;
     private static List<Monster> _monsters = new List<Monster>();
-    private static int numberMonstersMax, invocationPieces, gold;
+    private static int numberMonstersMax, gems = 0, gold = 0;
     private static Monster mainMonster;
     private static Dictionary<Food, int> _foods = new Dictionary<Food, int>();
 
@@ -65,7 +65,7 @@ public static class Player
         return _foods;
     }
 
-    public static int InvocationPieces { get => invocationPieces; set => invocationPieces = value; }
+    public static int Gems { get => gems; set => gems = value; }
 
     public static int Gold { get => gold; set => gold = value; }
 

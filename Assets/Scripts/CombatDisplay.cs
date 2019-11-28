@@ -6,8 +6,8 @@ using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 public class CombatDisplay : MonoBehaviour {
-	public GameObject playerMonstersContainer, ennemiesContainer, skillsContainer, monsterButtonPrefab, endContainer, cdContainer, healthBar, attackBar, skillInfo;
-	public Text endText, cdText;
+	public GameObject playerMonstersContainer, ennemiesContainer, skillsContainer, monsterButtonPrefab, endContainer, cdContainer, healthBar, attackBar, skillInfo, monsterEndFightContainer, monsterEndFightDisplay;
+	public Text endText, cdText, goldNumber, gemsNumber;
 
 	private List<Monster> _playerMonsters;
 	private List<Monster> _ennemies;
@@ -291,8 +291,33 @@ public class CombatDisplay : MonoBehaviour {
 	private void EndFight()
 	{
 		endContainer.SetActive(true);
-		if (_playerMonsters.Count == 0)
-			endText.text = "Défaite !";
+		if (_playerMonsters.Count == 0)     //Player lost
+        {
+            endText.text = "Défaite !";
+        }
+        else    // Player won
+        {
+            foreach(Monster m in _playerMonsters)
+            {
+
+                m.Experience += Combat.MonsterExperienceReward;
+                GameObject display = Instantiate(monsterEndFightDisplay) as GameObject;
+                display.transform.SetParent(monsterEndFightContainer.transform);
+                display.transform.localScale = new Vector3(1, 1);
+                Text monsterName = display.transform.Find("MonsterName").gameObject.GetComponent<Text>();
+                monsterName.text = m.getName();
+                Text xpGained = display.transform.Find("XpGained").gameObject.GetComponent<Text>();
+                xpGained.text = "+ " + Combat.MonsterExperienceReward + " xp";
+                if (m.HasLevelUp == false)
+                    display.transform.Find("LevelUpImage").gameObject.SetActive(false);
+            }
+
+            goldNumber.text = Combat.GoldReward.ToString();
+            gemsNumber.text = Combat.GemReward.ToString();
+
+            Player.Gold += Combat.GoldReward;
+            Player.Gems += Combat.GemReward;
+        }
 	}
 
 	public void ReturnToLevelSelection()

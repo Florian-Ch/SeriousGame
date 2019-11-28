@@ -34,9 +34,15 @@ public class LevelSelection : MonoBehaviour {
 		List<Monster> _ennemies = new List<Monster>();
 
 		_ennemies.Add(ListMonsters.get("Hauntree"));
+        _ennemies[0].setHp(100);
 		Combat.setEnnemies(_ennemies);
 
-		SceneManager.LoadScene("CombatMonsterSelection");
+        // Setup rewards
+        Combat.MonsterExperienceReward = 1500;
+        Combat.GoldReward = 100;
+        Combat.GemReward = 1;
+
+        SceneManager.LoadScene("CombatMonsterSelection");
 	}
 
 	public void stage_1_2()
@@ -49,6 +55,11 @@ public class LevelSelection : MonoBehaviour {
 		_ennemies.Add(ListMonsters.get("Asterios"));
 		Combat.setEnnemies(_ennemies);
 
-		SceneManager.LoadScene("CombatMonsterSelection");
+        // Setup rewards
+        Combat.MonsterExperienceReward = 100;
+        Combat.GoldReward = 200;
+        Combat.GemReward = 1;
+
+        SceneManager.LoadScene("CombatMonsterSelection");
 	}
 }
