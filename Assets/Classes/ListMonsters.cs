@@ -43,8 +43,8 @@ public static class ListMonsters {
 		List<Skill> copy = new List<Skill>();
 		foreach (Skill skill in skills)
 		{
-			copy.Add(skill);
-            //copy.Add(new Skill(skill.getName(), skill.getIcon(), skill.getInitialCooldown(), skill.getMultiplier()));
+			//copy.Add(skill);
+            copy.Add(new Skill(skill.getName(), skill.getIcon(), skill.getInitialCooldown(), skill.getMultiplier()));
         }
 		return copy;
 	}
