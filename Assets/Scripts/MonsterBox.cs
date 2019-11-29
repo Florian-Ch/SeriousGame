@@ -26,7 +26,6 @@ public class MonsterBox : MonoBehaviour
     {
         monsterFoodFull.SetActive(false);
 		foodDisplay.SetActive(false);
-        _monsters = Player.getMonsters();
 
 		// Get all gameobjects
 		nameDisplay = GameObject.Find("MonsterName");
@@ -40,6 +39,15 @@ public class MonsterBox : MonoBehaviour
 		critRateDisplay = GameObject.Find("CritRate");
 		critDmgDisplay = GameObject.Find("CritDmg");
 
+        InitializeMonsters();
+
+        DisplayFoodList();       
+    }
+
+    private void InitializeMonsters()
+    {
+        _monsters = Player.getMonsters();
+        foreach (Transform child in monstersListContainer.transform) { GameObject.Destroy(child.gameObject); }
         // create monsters list
         foreach (Monster m in _monsters)
         {
@@ -51,13 +59,15 @@ public class MonsterBox : MonoBehaviour
             thumbnail.GetComponent<Button>().onClick.AddListener(() => DisplayMonsterData(m));
         }
 
-        DisplayFoodList();
-
         if (_monsters.Count > 0)
         {
             DisplayMonsterData(_monsters[0]);   // display data of the first monster
             DisplayMonsterFood(_monsters[0]);   // display food of the first monster
             selectedMonster = _monsters[0];
+            if (selectedMonster == Player.getMainMonster())
+                GameObject.Find("FavoriteMonsterButton").GetComponent<Image>().sprite = Resources.Load<Sprite>("Decor/YellowStar");
+            else
+                GameObject.Find("FavoriteMonsterButton").GetComponent<Image>().sprite = Resources.Load<Sprite>("Decor/Star");
         }
     }
 
@@ -69,6 +79,10 @@ public class MonsterBox : MonoBehaviour
     private void DisplayMonsterData(Monster m)
     {
         selectedMonster = m;
+        if(selectedMonster == Player.getMainMonster())
+            GameObject.Find("FavoriteMonsterButton").GetComponent<Image>().sprite = Resources.Load<Sprite>("Decor/YellowStar");
+        else
+            GameObject.Find("FavoriteMonsterButton").GetComponent<Image>().sprite = Resources.Load<Sprite>("Decor/Star");
         DisplayMonsterFood(m);
         // image part
         Sprite monsterSprite = Resources.Load<Sprite>("MonstersSprites/" + m.getName());
@@ -227,5 +241,19 @@ public class MonsterBox : MonoBehaviour
         }
 
         m.addStats(m.BonusStats["hp"], m.BonusStats["attack"], m.BonusStats["defense"], m.BonusStats["speed"], m.BonusStats["critRate"], m.BonusStats["critDamage"]);
+    }
+
+    public void ChangeMainMonster()
+    {
+        Player.defineMainMonster(selectedMonster);
+        GameObject.Find("FavoriteMonsterButton").GetComponent<Image>().sprite = Resources.Load<Sprite>("Decor/YellowStar");
+    }
+
+    public void DeleteMonster()
+    {
+        if(Player.removeMonster(selectedMonster))
+        {
+            InitializeMonsters();
+        }
     }
 }

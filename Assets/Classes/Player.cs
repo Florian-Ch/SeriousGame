@@ -24,6 +24,16 @@ public static class Player
 		_monsters.Add(m);
 	}
 
+    public static bool removeMonster(Monster m)
+    {
+        if(_monsters.Contains(m) && _monsters.Count > 1)
+        {
+            _monsters.Remove(m);
+            return true;
+        }
+        return false;
+    }
+
 	public static List<Monster> getMonsters()
 	{
 		return _monsters;
