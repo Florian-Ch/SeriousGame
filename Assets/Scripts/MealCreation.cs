@@ -196,5 +196,7 @@ public class MealCreation : MonoBehaviour
                 break;
             }
         }
+
+        DataSaver.SaveData("player");
     }
 }

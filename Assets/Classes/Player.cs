@@ -4,7 +4,7 @@ public static class Player
 {
     private static string username;
     private static List<Monster> _monsters = new List<Monster>();
-    private static int numberMonstersMax, gems = 0, gold = 0;
+    private static int numberMonstersMax = 100, gems = 0, gold = 0;
     private static Monster mainMonster;
     private static Dictionary<Food, int> _foods = new Dictionary<Food, int>();
 
@@ -38,6 +38,8 @@ public static class Player
 	{
 		return _monsters;
 	}
+
+    public static void setMonsters(List<Monster> m) { _monsters = m; }
 
     public static void defineMainMonster(Monster m)
     {
@@ -77,8 +79,11 @@ public static class Player
         return _foods;
     }
 
+    public static void setFoodDico(Dictionary<Food, int> fd) { _foods = fd; }
+
     public static int Gems { get => gems; set => gems = value; }
 
     public static int Gold { get => gold; set => gold = value; }
 
+    public static int NumberMonstersMax { get => numberMonstersMax; set => numberMonstersMax = value; }
 }

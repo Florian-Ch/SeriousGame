@@ -329,6 +329,8 @@ public class CombatDisplay : MonoBehaviour {
 
             Player.Gold += Combat.GoldReward;
             Player.Gems += Combat.GemReward;
+
+            DataSaver.SaveData("player");
         }
 	}
 

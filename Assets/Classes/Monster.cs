@@ -35,6 +35,21 @@ public class Monster
         healthBar = null;
     }
 
+    override
+    public string ToString()
+    {
+        /*return name + "," + role + "," + diet + "," + level + "," + maxLevel + "," + experience + "," + maxHp + "," + hp + "," + attack + "," + defense + "," + speed + "," + critRate + "," + critDamage + "," + attackBar + "," + foodBonusMultiplier + "," + role;*/
+        string res = name + "," + level + "," + experience;
+        foreach(Food f in _foods) 
+        {
+            if(f!=null)
+                res += "," + f.getName().Replace(" ", "");
+            else
+                res += ",null";
+        }
+        return res; 
+    }
+
     public string getName() { return name; }
 
     public string getRole() { return role; }
@@ -42,6 +57,8 @@ public class Monster
     public string getDiet() { return diet; }
 
     public int getLevel() { return level; }
+
+    public void setLevel(int l) { level = l; }
 
     public int getMaxHp() { return maxHp; }
 
@@ -152,12 +169,6 @@ public class Monster
         speed += spd;
         critRate += cr;
         critDamage += cd;
-    }
-
-    override
-    public string ToString()
-    {
-        return "Monstre : " + name;
     }
 
     public int FoodBonusMultiplier { get => foodBonusMultiplier; set => foodBonusMultiplier = value; }

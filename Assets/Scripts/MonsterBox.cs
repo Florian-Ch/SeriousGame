@@ -151,6 +151,8 @@ public class MonsterBox : MonoBehaviour
             // max food reach display
             monsterFoodFull.SetActive(true);
         }
+
+        DataSaver.SaveData("player");
     }
 
     public void CloseMonsterFoodFull()
@@ -168,6 +170,8 @@ public class MonsterBox : MonoBehaviour
         int mult = ListInteractionFood.GetMultiplier(new List<Food>(selectedMonster.getFood()));
         selectedMonster.FoodBonusMultiplier = mult;
         RemoveStats(f, selectedMonster);
+
+        DataSaver.SaveData("player");
     }
 
     public void DisplayMonsterFood(Monster m)
@@ -247,6 +251,8 @@ public class MonsterBox : MonoBehaviour
     {
         Player.defineMainMonster(selectedMonster);
         GameObject.Find("FavoriteMonsterButton").GetComponent<Image>().sprite = Resources.Load<Sprite>("Decor/YellowStar");
+
+        DataSaver.SaveData("player");
     }
 
     public void DeleteMonster()
@@ -255,5 +261,7 @@ public class MonsterBox : MonoBehaviour
         {
             InitializeMonsters();
         }
+
+        DataSaver.SaveData("player");
     }
 }
