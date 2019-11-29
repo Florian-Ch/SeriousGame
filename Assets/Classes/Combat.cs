@@ -4,6 +4,7 @@ public static class Combat {
 	private static int numberOfPlayerMonsters, monsterExperienceReward, goldReward, gemReward;
 	private static List<Monster> _ennemies = new List<Monster>();
 	private static List<Monster> _playerMonsters = new List<Monster>();
+    private static List<Monster> _monstersToXp = new List<Monster>();
 
     public static void setNumberOfPlayerMonsters(int n) { numberOfPlayerMonsters = n; }
 
@@ -22,4 +23,6 @@ public static class Combat {
     public static int GoldReward { get => goldReward; set => goldReward = value; }
 
     public static int GemReward { get => gemReward; set => gemReward = value; }
+
+    public static List<Monster> MonstersToXp { get => _monstersToXp; set => _monstersToXp = value; }
 }

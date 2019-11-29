@@ -9,7 +9,7 @@ public class CombatDisplay : MonoBehaviour {
 	public GameObject playerMonstersContainer, ennemiesContainer, skillsContainer, monsterButtonPrefab, endContainer, cdContainer, healthBar, attackBar, skillInfo, monsterEndFightContainer, monsterEndFightDisplay, pauseMenu;
 	public Text endText, cdText, goldNumber, gemsNumber;
 
-	private List<Monster> _playerMonsters, _combatPlayerMonsters, _combatEnnemies;
+	private List<Monster> _playerMonsters, _combatPlayerMonsters, _combatEnnemies, _monstersToXp;
 	private List<Monster> _ennemies;
 	private Monster monsterPlaying;
 	private bool isPlayerTurn;
@@ -24,6 +24,7 @@ public class CombatDisplay : MonoBehaviour {
         foreach(Monster m in Combat.getPlayerMonsters()) { _combatPlayerMonsters.Add(m.clone()); }
         _combatEnnemies = new List<Monster>();
         foreach (Monster m in Combat.getEnnemies()) { _combatEnnemies.Add(m.clone()); }
+        _monstersToXp = Combat.MonstersToXp;
 
         // Init interface
         pauseMenu.SetActive(false);
@@ -165,7 +166,7 @@ public class CombatDisplay : MonoBehaviour {
 
 	private void AttackMonster(Monster m, GameObject hpBar)
 	{
-        Debug.Log("monstre utilise skill id " + selectedSkill.Id);
+        // Debug.Log("monstre utilise skill id " + selectedSkill.Id);
         int critDmg = 100;
 		if (Random.Range(0, 100) <= monsterPlaying.getCritRate())
 			critDmg = monsterPlaying.getCritDmg();
@@ -306,10 +307,10 @@ public class CombatDisplay : MonoBehaviour {
         }
         else    // Player won
         {
-            foreach(Monster m in _playerMonsters)
+            foreach (Monster m in _monstersToXp)
             {
-
                 m.Experience += Combat.MonsterExperienceReward;
+                // Debug.Log("xp = " + m.Experience);
                 GameObject display = Instantiate(monsterEndFightDisplay) as GameObject;
                 display.transform.SetParent(monsterEndFightContainer.transform);
                 display.transform.localScale = new Vector3(1, 1);
@@ -320,7 +321,7 @@ public class CombatDisplay : MonoBehaviour {
                 if (m.HasLevelUp == false)
                     display.transform.Find("LevelUpImage").gameObject.SetActive(false);
                 else
-                    m.HasLevelUp = false;
+                    m.HasLevelUp = false;                           
             }
 
             goldNumber.text = Combat.GoldReward.ToString();

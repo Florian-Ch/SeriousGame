@@ -13,18 +13,20 @@ public class CombatMonsterSelection : MonoBehaviour {
 	private int numberOfPlayerMonsters;
 	private List<Monster> _playerMonsters;
 
-	private List<Monster> _monsters;
+	private List<Monster> _monsters, _realMonsters, _monstersToXp;
 
 	void Start()
 	{
 		noSlotsPopup.SetActive(false);
 		numberOfPlayerMonsters = Combat.getNumberOfPlayerMonsters();
 		_playerMonsters = new List<Monster>();
+        _monstersToXp = new List<Monster>();
         _monsters = new List<Monster>();
         foreach (Monster m in Player.getMonsters())
         {
-            _monsters.Add(m);
+            _monsters.Add(m.clone());
         }
+        _realMonsters = Player.getMonsters();
 
         DisplayMonstersList();
 
@@ -66,11 +68,14 @@ public class CombatMonsterSelection : MonoBehaviour {
 	{
 		if (_playerMonsters.Count < numberOfPlayerMonsters)
 		{
-			_playerMonsters.Add(m.clone());
+            _monstersToXp.Add(_realMonsters[_monsters.IndexOf(m)]);
+            _realMonsters.RemoveAt(_monsters.IndexOf(m));
+
+            _playerMonsters.Add(m.clone());
 			DisplayPlayerMonsters();
             _monsters.Remove(m);
             DisplayMonstersList();
-		}
+   		}
 		else
 		{
 			noSlotsPopup.SetActive(true);
@@ -81,7 +86,10 @@ public class CombatMonsterSelection : MonoBehaviour {
 
 	public void RemoveMonster(Monster m)
 	{
-		_playerMonsters.Remove(m);
+        _realMonsters.Add(_monstersToXp[_playerMonsters.IndexOf(m)]);
+        _monstersToXp.RemoveAt(_playerMonsters.IndexOf(m));
+
+        _playerMonsters.Remove(m);
 		DisplayPlayerMonsters();
         _monsters.Add(m);
         DisplayMonstersList();
@@ -118,8 +126,14 @@ public class CombatMonsterSelection : MonoBehaviour {
 
 	public void StartFight()
 	{
-		if (_playerMonsters.Count > 0)
+        foreach (Monster m in _monstersToXp)
+        {
+            _realMonsters.Add(m);
+        }
+
+        if (_playerMonsters.Count > 0)
 		{
+            Combat.MonstersToXp = _monstersToXp;
 			Combat.setPlayerMonsters(_playerMonsters);
 			SceneManager.LoadScene("CombatDisplay");
 		}
