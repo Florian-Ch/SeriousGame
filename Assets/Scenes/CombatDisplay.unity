@@ -265,6 +265,7 @@ MonoBehaviour:
   foodListContainer: {fileID: 893497768}
   counterDisplay: {fileID: 1712867518535162810, guid: 8f4914c9633968045995ab9f8b23904a,
     type: 3}
+  backgound: {fileID: 1443826613}
   endText: {fileID: 147274764}
   cdText: {fileID: 393831994}
   goldNumber: {fileID: 1227926311}
@@ -2477,12 +2478,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.31055957, g: 0.8584906, b: 0.3037113, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 0}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1

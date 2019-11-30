@@ -6,7 +6,7 @@ using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 public class CombatDisplay : MonoBehaviour {
-	public GameObject playerMonstersContainer, ennemiesContainer, skillsContainer, monsterButtonPrefab, endContainer, cdContainer, healthBar, attackBar, skillInfo, monsterEndFightContainer, monsterEndFightDisplay, pauseMenu, foodListContainer, counterDisplay;
+	public GameObject playerMonstersContainer, ennemiesContainer, skillsContainer, monsterButtonPrefab, endContainer, cdContainer, healthBar, attackBar, skillInfo, monsterEndFightContainer, monsterEndFightDisplay, pauseMenu, foodListContainer, counterDisplay, backgound;
 	public Text endText, cdText, goldNumber, gemsNumber;
 
 	private List<Monster> _playerMonsters, _combatPlayerMonsters, _combatEnnemies, _monstersToXp;
@@ -31,6 +31,7 @@ public class CombatDisplay : MonoBehaviour {
 		skillInfo.SetActive(false);
 		endContainer.SetActive(false);
 		cdContainer.SetActive(false);
+        backgound.GetComponent<Image>().sprite = Resources.Load<Sprite>("Decor/" + Combat.Background);
 		_playerMonsters = Combat.getPlayerMonsters();
 		_ennemies = Combat.getEnnemies();
 		monsterPlaying = null;
@@ -193,7 +194,7 @@ public class CombatDisplay : MonoBehaviour {
 			critDmg = monsterPlaying.getCritDmg();
 		double rawDmg = (selectedSkill.getMultiplier() * monsterPlaying.getAttack()) * (critDmg / 100);
 
-		int reducedDmg = (int)(rawDmg / (m.getDef() / 5));  // apply damage reduction formula based on ennemy def here
+		int reducedDmg = (int)(rawDmg * ( 1000 / ( 1140+3.5* m.getDef() ) ) );  // apply damage reduction formula based on ennemy def here
 
 		int currentHp = m.getHp();
 		m.setHp(currentHp - reducedDmg);
