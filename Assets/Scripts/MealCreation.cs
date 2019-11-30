@@ -163,6 +163,10 @@ public class MealCreation : MonoBehaviour
                 thumbnail.transform.localScale = new Vector3(1, 1, 1);                          // resize button (sooo huge by default)
             }
         }
+        else
+        {
+            mealName.text = "Pas de repas craftable actuellement";
+        }
     }
 
     public void CraftMeal()

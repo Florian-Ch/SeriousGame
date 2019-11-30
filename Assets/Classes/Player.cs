@@ -59,6 +59,7 @@ public static class Player
             _foods.Add(f, quantity);
         }
     }
+
     public static bool removeFood(Food f, int quantity)
     {
         bool res = true;

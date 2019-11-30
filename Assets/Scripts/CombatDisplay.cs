@@ -6,7 +6,7 @@ using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 public class CombatDisplay : MonoBehaviour {
-	public GameObject playerMonstersContainer, ennemiesContainer, skillsContainer, monsterButtonPrefab, endContainer, cdContainer, healthBar, attackBar, skillInfo, monsterEndFightContainer, monsterEndFightDisplay, pauseMenu;
+	public GameObject playerMonstersContainer, ennemiesContainer, skillsContainer, monsterButtonPrefab, endContainer, cdContainer, healthBar, attackBar, skillInfo, monsterEndFightContainer, monsterEndFightDisplay, pauseMenu, foodListContainer, counterDisplay;
 	public Text endText, cdText, goldNumber, gemsNumber;
 
 	private List<Monster> _playerMonsters, _combatPlayerMonsters, _combatEnnemies, _monstersToXp;
@@ -141,15 +141,29 @@ public class CombatDisplay : MonoBehaviour {
 			GameObject monster = Instantiate(monsterButtonPrefab) as GameObject;          // create button
 			monster.GetComponent<Image>().sprite = sprite;                                // apply texture
 			monster.transform.SetParent(parent.transform);                                // place button at the right place
-			monster.transform.localScale = new Vector3((float)0.9, (float)0.9, 1);        // resize button (sooo huge by default)
-			monster.name = m.getName();
+            if(m.getName().StartsWith("BOSS"))
+            {
+                monster.transform.localScale = new Vector3(3, 3, 1);        // resize button (sooo huge by default)
+            }
+            else
+            {
+                monster.transform.localScale = new Vector3(0.9f, 0.9f, 1);        // resize button (sooo huge by default)
+            }
+            monster.name = m.getName();
 
 			// Get healthBar
 			GameObject hpBar = Instantiate(healthBar) as GameObject;
 			hpBar.transform.SetParent(monster.transform);
 			hpBar.transform.localScale = new Vector3(1, 1, 1);
-			hpBar.transform.position = new Vector3(0, 0.75f, 0); // 1 = 62 ?! so 0.75 should be around 46
-
+            if (m.getName().StartsWith("BOSS"))
+            {
+                hpBar.transform.position = new Vector3(0, 3f, 0); // 1 = 62 ?! so 0.75 should be around 46
+            }
+            else
+            {
+                hpBar.transform.position = new Vector3(0, 0.75f, 0); // 1 = 62 ?! so 0.75 should be around 46
+            }
+            
 			// Set HPbar to monster
 			m.HealthBar = hpBar;
 
@@ -157,10 +171,17 @@ public class CombatDisplay : MonoBehaviour {
 			GameObject atb = Instantiate(attackBar) as GameObject;
 			atb.transform.SetParent(monster.transform);
 			atb.transform.localScale = new Vector3(1, 1, 1);
-			atb.transform.position = new Vector3(0, 0.70f, 0); // 1 = 62 ?! so 0.75 should be around 46
+            if (m.getName().StartsWith("BOSS"))
+            {
+                atb.transform.position = new Vector3(0, 2.8f, 0); // 1 = 62 ?! so 0.75 should be around 46
+            }
+            else
+            {
+                atb.transform.position = new Vector3(0, 0.70f, 0); // 1 = 62 ?! so 0.75 should be around 46
+            }
 
-			// ! Depreciate (bug, we can kil our own monster)
-			monster.GetComponent<Button>().onClick.AddListener(() => AttackMonster(m, m.HealthBar));
+            // ! Depreciate (bug, we can kil our own monster)
+            monster.GetComponent<Button>().onClick.AddListener(() => AttackMonster(m, m.HealthBar));
 		}
 	}
 
@@ -330,13 +351,33 @@ public class CombatDisplay : MonoBehaviour {
             Player.Gold += Combat.GoldReward;
             Player.Gems += Combat.GemReward;
 
+            foreach (Transform child in foodListContainer.transform) { GameObject.Destroy(child.gameObject); }
+            foreach (Food f in Combat.FoodReward.Keys)
+            {
+                if(Combat.FoodReward[f] > 0)
+                {
+                    Player.addFood(f, Combat.FoodReward[f]);
+                    Sprite sprite = Resources.Load<Sprite>("FoodSprites/" + f.getName().Replace(' ', '_'));    // load texture
+                    GameObject thumbnail = Instantiate(monsterButtonPrefab) as GameObject;          // create button
+                    thumbnail.GetComponent<Image>().sprite = sprite;                                // apply texture
+                    thumbnail.transform.SetParent(foodListContainer.transform);                 // place button at the right place
+                    thumbnail.transform.localScale = new Vector3(1, 1, 1);                          // resize button (sooo huge by default)
+                    GameObject foodNumber = Instantiate(counterDisplay) as GameObject;
+                    foodNumber.transform.SetParent(thumbnail.transform);
+                    foodNumber.transform.localScale = new Vector3(1, 1, 1);
+                    foodNumber.transform.position = new Vector3(0.43f, -0.43f, 0);
+                    foodNumber.GetComponentInChildren<Text>().text = Combat.FoodReward[f].ToString();
+                }
+            }
+
             DataSaver.SaveData("player");
         }
 	}
 
 	public void ReturnToLevelSelection()
 	{
-		SceneManager.LoadScene("LevelSelection");
+        Combat.ClearFoodReward();
+        SceneManager.LoadScene("LevelSelection");
 	}
 
 	public void CloseCdAlert()
