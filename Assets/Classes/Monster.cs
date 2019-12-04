@@ -5,14 +5,14 @@ using UnityEngine;
 public class Monster
 {
     private string name, role, diet;
-    private int level, maxLevel, experience, maxHp, hp, attack, defense, speed, critRate, critDamage, attackBar, foodBonusMultiplier;
+    private int level, maxLevel, experience, maxHp, hp, attack, defense, speed, critRate, critDamage, attackBar, foodBonusMultiplier, rarity;
     private List<Skill> _skills;
     private Food[] _foods;
-    Dictionary<string, int> bonusStats;
+    Dictionary<string, int> bonusStats, boosts, malus;
     private GameObject healthBar;
     private bool hasLevelUp = false;
 
-    public Monster(string nom, string rol, string alim, int pv, int atk, int def, int spd, List<Skill> skills)
+    public Monster(string nom, string rol, string alim, int pv, int atk, int def, int spd, List<Skill> skills, int rarity = 1)
     {
         name = nom;
         role = rol;
@@ -33,6 +33,9 @@ public class Monster
         foodBonusMultiplier = 1;
         bonusStats = new Dictionary<string, int>() { { "hp", 0 }, { "attack", 0 }, { "defense", 0 }, { "speed", 0 }, { "critRate", 0 }, { "critDamage", 0 } };
         healthBar = null;
+		this.rarity = rarity;
+		boosts = new Dictionary<string, int>(); // Create an empty dictionary for boosts
+		malus = new Dictionary<string, int>(); // Create an empty dictionary for malus
     }
 
     override
@@ -66,7 +69,10 @@ public class Monster
 
     public int getHp() { return hp; }
 
-    public void setHp(int pv) { hp = pv; }
+    public void setHp(int pv) {
+		if(pv >= maxHp) hp = maxHp;
+		else hp = pv;
+	}
 
     public int getAttack() { return attack; }
 
@@ -160,6 +166,118 @@ public class Monster
         return _foods;
     }
 
+	public void addMalus(string stat, int turn)
+	{
+		// Check if the monster has already the same malus and check new malus lasts longer
+		// so update time of malus
+		if(Malus.ContainsKey(stat) && turn > Malus[stat])
+		{
+			Malus.Remove(stat);
+			Malus.Add(stat, turn);
+
+		} 
+		else
+		{
+			switch (stat)
+			{
+				case "attack":
+					attack = (int)(attack * 0.75);
+					break;
+
+				case "defense":
+					defense = (int)(defense * 0.75);
+					break;
+
+				case "speed":
+					speed = (int)(speed * 0.75);
+					break;
+				default:
+					break;
+			}
+			Malus.Add(stat, turn);
+		}
+	}
+
+	public void removeMalus(string stat)
+	{
+		switch (stat)
+		{
+			case "attack":
+				attack = (int)(attack / 0.75);
+				break;
+
+			case "defense":
+				defense = (int)(defense / 0.75);
+				break;
+
+			case "speed":
+				speed = (int)(speed / 0.75);
+				break;
+			default:
+				break;
+		}
+
+		Malus.Remove(stat);
+	}
+
+	public void addBoost(string stat, int turn)
+	{
+		// Check if the monster has already the same boost and check new boost lasts longer
+		// so update time of boost
+		if (Boosts.ContainsKey(stat) && turn > Boosts[stat])
+		{
+			Boosts.Remove(stat);
+			Boosts.Add(stat, turn);
+
+		}
+		else if(!Boosts.ContainsKey(stat))
+		{
+			switch (stat)
+			{
+				case "attack":
+					attack = (int)(attack * 1.5);
+					break;
+
+				case "defense":
+					defense = (int)(defense * 1.5);
+					break;
+
+				case "speed":
+					speed = (int)(speed * 1.5);
+					break;
+				case "critRate":
+					critRate += 15;
+					break;
+				default:
+					break;
+			}
+			Boosts.Add(stat, turn);
+		}
+	}
+
+	public void removeBoost(string stat)
+	{
+		switch (stat)
+		{
+			case "attack":
+				attack = (int)(attack / 1.5);
+				break;
+
+			case "defense":
+				defense = (int)(defense / 1.5);
+				break;
+
+			case "speed":
+				speed = (int)(speed / 1.5);
+				break;
+			case "critRate":
+				critRate -= 15;
+				break;
+			default:
+				break;
+		}
+		Boosts.Remove(stat);
+	}
     public void addStats(int pv, int atk, int def, int spd, int cr, int cd)
     {
         maxHp += pv;
@@ -174,9 +292,11 @@ public class Monster
     public int FoodBonusMultiplier { get => foodBonusMultiplier; set => foodBonusMultiplier = value; }
     public Dictionary<string, int> BonusStats { get => bonusStats; set => bonusStats = value; }
 	public GameObject HealthBar { get => healthBar; set => healthBar = value; }
+	public Dictionary<string, int> Boosts { get => boosts; }
+	public Dictionary<string, int> Malus { get => malus; }
 
 	public Monster clone()
 	{
-		return new Monster(name, role, diet, hp, attack, defense, speed, ListMonsters.Deepcopy(_skills));
+		return new Monster(name, role, diet, hp, attack, defense, speed, ListMonsters.Deepcopy(_skills), rarity);
 	}
 }

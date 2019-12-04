@@ -69,9 +69,9 @@ public class LevelSelection : MonoBehaviour {
         // Setup ennemies
         List<Monster> _ennemies = new List<Monster>();
 
-		_ennemies.Add(ListMonsters.get("Hauntree"));
-        _ennemies[0].setHp(100);
-        _ennemies[0].setMaxHp(100);
+		_ennemies.Add(ListMonsters.get("Demonorose"));
+        //_ennemies[0].setHp(100);
+        //_ennemies[0].setMaxHp(100);
         Combat.setEnnemies(_ennemies);
 
         // Setup rewards
@@ -89,12 +89,12 @@ public class LevelSelection : MonoBehaviour {
 
         // Setup ennemies
         List<Monster> _ennemies = new List<Monster>();
-		_ennemies.Add(ListMonsters.get("Hauntree"));
-		_ennemies.Add(ListMonsters.get("Asterios"));
-        _ennemies[0].setHp(150);
-        _ennemies[0].setMaxHp(150);
-        _ennemies[1].setHp(150);
-        _ennemies[1].setMaxHp(150);
+		_ennemies.Add(ListMonsters.get("Ecufeu"));
+		_ennemies.Add(ListMonsters.get("Coolicorn"));
+        //_ennemies[0].setHp(150);
+        //_ennemies[0].setMaxHp(150);
+        //_ennemies[1].setHp(150);
+        //_ennemies[1].setMaxHp(150);
         Combat.setEnnemies(_ennemies);
 
         // Setup rewards

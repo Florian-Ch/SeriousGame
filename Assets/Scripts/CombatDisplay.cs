@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
@@ -188,18 +189,9 @@ public class CombatDisplay : MonoBehaviour {
 
 	private void AttackMonster(Monster m, GameObject hpBar)
 	{
-        // Debug.Log("monstre utilise skill id " + selectedSkill.Id);
-        int critDmg = 100;
-		if (Random.Range(0, 100) <= monsterPlaying.getCritRate())
-			critDmg = monsterPlaying.getCritDmg();
-		double rawDmg = (selectedSkill.getMultiplier() * monsterPlaying.getAttack()) * (critDmg / 100);
+		DealDamage(m);
 
-		int reducedDmg = (int)(rawDmg * ( 1000 / ( 1140+3.5* m.getDef() ) ) );  // apply damage reduction formula based on ennemy def here
-
-		int currentHp = m.getHp();
-		m.setHp(currentHp - reducedDmg);
-        // Debug.Log("raw : " + rawDmg + " reduced : " + reducedDmg + " previous hp : " + currentHp + " hp : " + m.getHp());
-		// check if monster dies
+		// Check if the monster dies
 		if (m.getHp() <= 0)
 		{
 			if (isPlayerTurn)
@@ -226,7 +218,9 @@ public class CombatDisplay : MonoBehaviour {
 			bar.localScale = new Vector3(hpRatio, 1f);
 		}
 
-		// end turn
+
+		// END OF THE TURN
+		#region Attack bar
 		monsterPlaying.setAttackBar(0);
 		GameObject atb;
 		if (isPlayerTurn)
@@ -236,6 +230,9 @@ public class CombatDisplay : MonoBehaviour {
 		Transform b = atb.transform.Find("Bar");
 		float atbRatio = (float)m.getAttackBar() / 1000;
 		b.localScale = new Vector3(atbRatio, 1f);
+		#endregion
+
+		#region Skills
 		foreach (Skill s in monsterPlaying.Skills)
 		{
 			int cd = s.getCooldown();
@@ -243,9 +240,97 @@ public class CombatDisplay : MonoBehaviour {
 				s.setCooldown(cd - 1);
 		}
 		selectedSkill.setCooldown(selectedSkill.getInitialCooldown());
+
+		// Remove skills of the current monster
 		foreach (Transform child in skillsContainer.transform) { GameObject.Destroy(child.gameObject); }
+		#endregion
+
+		#region Boosts & Malus
+		List<string> copy_boosts = new List<string>(monsterPlaying.Boosts.Keys);
+		foreach (string boost in copy_boosts)
+		{
+			if(!selectedSkill.Boosts.Contains(boost))
+			{
+				if (monsterPlaying.Boosts[boost] - 1 == 0) monsterPlaying.removeBoost(boost);
+				else monsterPlaying.Boosts[boost] -= 1;
+			}
+		}
+		List<string> copy_malus = new List<string>(monsterPlaying.Malus.Keys);
+		foreach (string malus in copy_malus)
+		{
+			if (monsterPlaying.Malus[malus] - 1 == 0) monsterPlaying.removeMalus(malus);
+			else monsterPlaying.Malus[malus] -= 1;
+		}
+		#endregion
+
+		// Reset 
 		playing = false;
 		monsterPlaying = null;
+	}
+
+	private void DealDamage(Monster m)
+	{
+		#region Old dealDamage
+		//int critDmg = 100;
+		//if (Random.Range(0, 100) <= monsterPlaying.getCritRate())
+		//	critDmg = monsterPlaying.getCritDmg();
+
+		//double rawDamage = (selectedSkill.getMultiplier() * monsterPlaying.getAttack()) * (critDmg / 100);
+
+		//int reducedDmg = (int)(rawDamage * (1000 / (1140 + 3.5 * m.getDef())));  // apply damage reduction formula based on ennemy def here
+
+		//int currentHp = m.getHp();
+		//m.setHp(currentHp - reducedDmg);
+		#endregion
+
+		#region New dealDamage
+		// Add effects
+		if (selectedSkill.NbTouched == 1)
+		{
+			foreach (string stat in selectedSkill.Malus) { m.addMalus(stat, selectedSkill.NbTurnBoost); }
+			foreach (string stat in selectedSkill.Boosts) { m.addBoost(stat, selectedSkill.NbTurnBoost); }
+		} 
+		else if (selectedSkill.NbTouched == 99) {
+			// Add malus
+			foreach(string stat in selectedSkill.Malus)
+			{
+				// Set for each monster malus
+				if(_ennemies.Contains(m)) foreach (Monster monster in _ennemies) { monster.addMalus(stat, selectedSkill.NbTurnBoost); }
+				else foreach (Monster monster in _playerMonsters) { monster.addMalus(stat, selectedSkill.NbTurnBoost); }
+			}
+			// Add Boosts
+			foreach (string stat in selectedSkill.Boosts)
+			{
+				// Set for each monster boost
+				if (_ennemies.Contains(m)) foreach (Monster monster in _ennemies) { monster.addBoost(stat, selectedSkill.NbTurnBoost); }
+				else foreach (Monster monster in _playerMonsters) { monster.addBoost(stat, selectedSkill.NbTurnBoost); }
+			}
+		}
+
+
+		// Check if the attack is a critic
+		bool is_crit = false;
+		// if (Random.Range(1, 101) <= monsterPlaying.getCritRate()) is_crit = true;
+
+		// Get raw damage | multiply by crit damage if this is a crit attack
+		double raw_damage = is_crit ? (selectedSkill.getMultiplier() * monsterPlaying.getAttack()) * (monsterPlaying.getCritDmg() / 100) : (selectedSkill.getMultiplier() * monsterPlaying.getAttack());
+		
+		// DAMAGE
+		if (selectedSkill.DoDamage)
+		{
+			// Apply damage reduction, based on ennemy defense
+			int reduced_dmg = (int)(raw_damage * (1000 / (1140 + 3.5 * m.getDef())));
+			if (selectedSkill.NbTouched == 1)
+				m.setHp(m.getHp() - reduced_dmg);
+			else if (selectedSkill.NbTouched == 99) 
+			{
+				// Attack all monsters
+				if (_ennemies.Contains(m)) foreach (Monster monster in _ennemies) { monster.setHp(monster.getHp() - reduced_dmg); }
+				else foreach (Monster monster in _playerMonsters) { monster.setHp(monster.getHp() - reduced_dmg); }
+			}
+		}
+		else m.setHp(m.getHp() + (int)raw_damage); // Heal the monster
+		#endregion
 	}
 
 	private void UpdateAttackBars()
@@ -443,10 +528,7 @@ public class CombatDisplay : MonoBehaviour {
 			// Reset HP
 			monster.setHp(monster.getMaxHp());
 			// Reset Cooldown 
-			foreach(Skill skill in monster.Skills)
-			{
-				skill.setCooldown(1);
-			}
+			foreach(Skill skill in monster.Skills) { skill.setCooldown(1); }
 		}
 	}
 

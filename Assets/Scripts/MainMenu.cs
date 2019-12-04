@@ -67,8 +67,8 @@ public class MainMenu : MonoBehaviour
                 Player.addFood(Thon.Instance, 0);
 
                 // Set monster player
-                Player.addMonster(ListMonsters.get("Asterios"));
-                Player.addMonster(ListMonsters.get("Hauntree"));
+                Player.addMonster(ListMonsters.get("Flobear"));
+                Player.addMonster(ListMonsters.get("Chashire"));
 
                 Player.defineMainMonster(Player.getMonsters()[0]);
             }
