@@ -176,7 +176,7 @@ public class Monster
 			Malus.Add(stat, turn);
 
 		} 
-		else
+		else if(!Malus.ContainsKey(stat))
 		{
 			switch (stat)
 			{

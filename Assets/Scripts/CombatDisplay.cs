@@ -151,7 +151,12 @@ public class CombatDisplay : MonoBehaviour {
             {
                 monster.transform.localScale = new Vector3(0.9f, 0.9f, 1);        // resize button (sooo huge by default)
             }
-            monster.name = m.getName();
+			// retourne les monstres du joueur mais enlève l'event du bouton ??! 
+			/*if (parent == playerMonstersContainer)
+			{
+				monster.transform.rotation = new Quaternion(0, 180, 0, 0);
+			}*/
+			monster.name = m.getName();
 
 			// Get healthBar
 			GameObject hpBar = Instantiate(healthBar) as GameObject;
@@ -191,33 +196,7 @@ public class CombatDisplay : MonoBehaviour {
 	{
 		DealDamage(m);
 
-		// Check if the monster dies
-		if (m.getHp() <= 0)
-		{
-			if (isPlayerTurn)
-			{
-				_ennemies.Remove(m);
-				DisplayMonsters(_ennemies, ennemiesContainer);
-                // setEventClickOnEnnemiesMonster();
-            }
-			else
-			{
-				_playerMonsters.Remove(m);
-				DisplayMonsters(_playerMonsters, playerMonstersContainer);
-			}
-
-			if (_ennemies.Count == 0 || _playerMonsters.Count == 0)
-			{
-				EndFight();
-			}
-		}
-		else    // update hp bar
-		{
-			Transform bar = hpBar.transform.Find("Bar");
-			float hpRatio = (float)m.getHp() / (float)m.getMaxHp();
-			bar.localScale = new Vector3(hpRatio, 1f);
-		}
-
+		ManageEndAttack();
 
 		// END OF THE TURN
 		#region Attack bar
@@ -266,6 +245,51 @@ public class CombatDisplay : MonoBehaviour {
 		// Reset 
 		playing = false;
 		monsterPlaying = null;
+	}
+
+	private void ManageEndAttack()
+	{
+		List<Monster> cloneEnnemies = new List<Monster>();
+		foreach (Monster m in _ennemies) { cloneEnnemies.Add(m); }
+
+		List<Monster> clonePlayerMonsters = new List<Monster>();
+		foreach (Monster m in _playerMonsters) { clonePlayerMonsters.Add(m); }
+
+		foreach (Monster m in cloneEnnemies)
+		{
+			if (m.getHp() <= 0)
+			{
+				_ennemies.Remove(m);
+				DisplayMonsters(_ennemies, ennemiesContainer);
+			}
+			else
+			{
+				Transform bar = m.HealthBar.transform.Find("Bar");
+				float hpRatio = (float)m.getHp() / (float)m.getMaxHp();
+				bar.localScale = new Vector3(hpRatio, 1f);
+			}
+		}
+
+		foreach (Monster m in clonePlayerMonsters)
+		{
+			if (m.getHp() <= 0)
+			{
+				_playerMonsters.Remove(m);
+				DisplayMonsters(_playerMonsters, playerMonstersContainer);
+			}
+			else
+			{
+				Transform bar = m.HealthBar.transform.Find("Bar");
+				float hpRatio = (float)m.getHp() / (float)m.getMaxHp();
+				bar.localScale = new Vector3(hpRatio, 1f);
+			}
+		}
+		cloneEnnemies.Clear();
+		clonePlayerMonsters.Clear();
+		if (_ennemies.Count == 0 || _playerMonsters.Count == 0)
+		{
+			EndFight();
+		}
 	}
 
 	private void DealDamage(Monster m)
