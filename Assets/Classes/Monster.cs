@@ -33,7 +33,7 @@ public class Monster
         foodBonusMultiplier = 1;
         bonusStats = new Dictionary<string, int>() { { "hp", 0 }, { "attack", 0 }, { "defense", 0 }, { "speed", 0 }, { "critRate", 0 }, { "critDamage", 0 } };
         healthBar = null;
-		this.rarity = rarity;
+		this.Rarity = rarity;
 		boosts = new Dictionary<string, int>(); // Create an empty dictionary for boosts
 		malus = new Dictionary<string, int>(); // Create an empty dictionary for malus
     }
@@ -294,9 +294,10 @@ public class Monster
 	public GameObject HealthBar { get => healthBar; set => healthBar = value; }
 	public Dictionary<string, int> Boosts { get => boosts; }
 	public Dictionary<string, int> Malus { get => malus; }
+    public int Rarity { get => rarity; }
 
-	public Monster clone()
+    public Monster clone()
 	{
-		return new Monster(name, role, diet, hp, attack, defense, speed, ListMonsters.Deepcopy(_skills), rarity);
+		return new Monster(name, role, diet, hp, attack, defense, speed, ListMonsters.Deepcopy(_skills), Rarity);
 	}
 }

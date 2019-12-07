@@ -18,4 +18,29 @@ public class InvocationPortal : MonoBehaviour
     {
         
     }
+
+    public void Return()
+    {
+        SceneManager.LoadScene("MainMenu");
+    }
+
+    public void Summon()
+    {
+        int rng = Random.Range(0, 100);
+        Monster monster = null;
+        if(rng < 89)    // summon 1 star monster
+        {
+            monster = ListMonsters.OneStarMonsters[Random.Range(0, ListMonsters.OneStarMonsters.Count)];
+        }
+        else if (rng < 99)    // summon 2 star monster
+        {
+            monster = ListMonsters.TwoStarsMonsters[Random.Range(0, ListMonsters.TwoStarsMonsters.Count)];
+        }
+        else if (rng == 99)    // summon 3 star monster
+        {
+            monster = ListMonsters.ThreeStarsMonsters[Random.Range(0, ListMonsters.ThreeStarsMonsters.Count)];
+        }
+        Player.addMonster(monster);
+        DataSaver.SaveData("player");
+    }
 }
