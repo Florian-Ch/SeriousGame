@@ -33,7 +33,7 @@ public class Monster
         foodBonusMultiplier = 1;
         bonusStats = new Dictionary<string, int>() { { "hp", 0 }, { "attack", 0 }, { "defense", 0 }, { "speed", 0 }, { "critRate", 0 }, { "critDamage", 0 } };
         healthBar = null;
-		this.Rarity = rarity;
+		this.rarity = rarity;
 		boosts = new Dictionary<string, int>(); // Create an empty dictionary for boosts
 		malus = new Dictionary<string, int>(); // Create an empty dictionary for malus
     }
