@@ -77,7 +77,7 @@ public class MainMenu : MonoBehaviour
         username.text = Player.getUsername();
         coinNumber.text = Player.Gold.ToString();
         gemsNumber.text = Player.Gems.ToString();
-        mainMonsterSprite.sprite = Resources.Load<Sprite>("MonstersSprites/" + Player.getMainMonster().getName());
+        mainMonsterSprite.sprite = Resources.Load<Sprite>("MonstersThumbnails/" + Player.getMainMonster().getName());
 
         DataSaver.SaveData("player");
     }
