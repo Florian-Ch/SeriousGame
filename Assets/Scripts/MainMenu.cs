@@ -6,12 +6,16 @@ using System.Collections.Generic;
 public class MainMenu : MonoBehaviour
 {
     public string PlayerUsername;
-    public Text username, coinNumber, gemsNumber;
+    public Text username, coinNumber, gemsNumber, usernameInputPlaceholder, usernameInputText;
     public Image mainMonsterSprite;
+    public GameObject ParametersMenu, ChangeUsernameMenu;
 
     // Start is called before the first frame update
     void Start()
     {
+        ParametersMenu.SetActive(false);
+        ChangeUsernameMenu.SetActive(false);
+
         ListMonsters.Init();
 
         Player.addFood(Chili.Instance, 0);
@@ -71,6 +75,8 @@ public class MainMenu : MonoBehaviour
                 Player.addMonster(ListMonsters.get("Chashire"));
 
                 Player.defineMainMonster(Player.getMonsters()[0]);
+
+                OpenChangeUsername();
             }
         }
         //END fake data
@@ -106,5 +112,34 @@ public class MainMenu : MonoBehaviour
     public void GoToMealCreation()
     {
         SceneManager.LoadScene("MealCreation");
+    }
+
+    public void OpenParameters()
+    {
+        ParametersMenu.SetActive(true);
+    }
+
+    public void CloseParameters()
+    {
+        ParametersMenu.SetActive(false);
+    }
+
+    public void OpenChangeUsername()
+    {
+        ChangeUsernameMenu.SetActive(true);
+        usernameInputPlaceholder.text = Player.getUsername(); 
+    }
+
+    public void CloseChangeUsername()
+    {
+        ChangeUsernameMenu.SetActive(false);
+    }
+
+    public void ChangeUsername()
+    {
+        Player.setUsername(usernameInputText.text);
+        DataSaver.SaveData("player");
+        username.text = Player.getUsername();
+        CloseChangeUsername();
     }
 }
