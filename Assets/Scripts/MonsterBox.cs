@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -11,6 +11,7 @@ public class MonsterBox : MonoBehaviour
     private Monster selectedMonster;
 
 	private GameObject nameDisplay;
+	private GameObject nameDisplayFood;
 	private GameObject roleDisplay;    
     private GameObject alimDisplay;
     private GameObject levelDisplay;
@@ -24,11 +25,13 @@ public class MonsterBox : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        nameDisplayFood = GameObject.Find("MonsterNameFoodDisplay");
         monsterFoodFull.SetActive(false);
 		foodDisplay.SetActive(false);
 
 		// Get all gameobjects
 		nameDisplay = GameObject.Find("MonsterName");
+		
 		roleDisplay = GameObject.Find("Role");
         alimDisplay = GameObject.Find("Alim");
         levelDisplay = GameObject.Find("Level");
@@ -90,6 +93,7 @@ public class MonsterBox : MonoBehaviour
         spriteContainer.GetComponent<Image>().sprite = monsterSprite;
         // data part
         nameDisplay.GetComponent<Text>().text = m.getName();
+	    nameDisplayFood.GetComponent<Text>().text = m.getName();
         roleDisplay.GetComponent<Text>().text = m.getRole();
         alimDisplay.GetComponent<Text>().text = m.getDiet();
         levelDisplay.GetComponent<Text>().text = m.getLevel().ToString();
