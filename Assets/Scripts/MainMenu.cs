@@ -8,7 +8,7 @@ public class MainMenu : MonoBehaviour
     public string PlayerUsername;
     public Text username, coinNumber, gemsNumber, usernameInputPlaceholder, usernameInputText;
     public Image mainMonsterSprite;
-    public GameObject ParametersMenu, ChangeUsernameMenu;
+    public GameObject ParametersMenu, ChangeUsernameMenu, intro1, intro2;
 
     // Start is called before the first frame update
     void Start()
@@ -50,7 +50,8 @@ public class MainMenu : MonoBehaviour
         {
             if (DataSaver.LoadData("player"))
             {
-
+                intro1.SetActive(false);
+                intro2.SetActive(false);
             }
             else
             {
@@ -141,5 +142,15 @@ public class MainMenu : MonoBehaviour
         DataSaver.SaveData("player");
         username.text = Player.getUsername();
         CloseChangeUsername();
+    }
+
+    public void CloseIntro1()
+    {
+        intro1.SetActive(false);
+    }
+
+    public void CloseIntro2()
+    {
+        intro2.SetActive(false);
     }
 }
