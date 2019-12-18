@@ -93,6 +93,7 @@ public class DataSaver
         Player.NumberMonstersMax = System.Convert.ToInt32(readSplit[1]);
         Player.Gems = System.Convert.ToInt32(readSplit[2]);
         Player.Gold = System.Convert.ToInt32(readSplit[3]);
+        Player.clearMonsters();
         string[] monsters = readSplit[4].Split(';');
         foreach(string s in monsters)
         {

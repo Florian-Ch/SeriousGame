@@ -41,6 +41,8 @@ public static class Player
 
     public static void setMonsters(List<Monster> m) { _monsters = m; }
 
+    public static void clearMonsters() { _monsters.Clear(); }
+
     public static void defineMainMonster(Monster m)
     {
         mainMonster = m;

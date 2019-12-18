@@ -48,7 +48,7 @@ public class MainMenu : MonoBehaviour
         // create fake data for test
         if (Player.getUsername() != PlayerUsername)  // only create data one the first load
         {
-            if(DataSaver.LoadData("player"))
+            if (DataSaver.LoadData("player"))
             {
 
             }
