@@ -76,6 +76,8 @@ public class Monster
 
     public int getAttack() { return attack; }
 
+    public void setAttack(int atk) { attack = atk; }
+
     public int getDef() { return defense; }
 
     public int getSpeed() { return speed; }

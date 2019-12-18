@@ -61,6 +61,8 @@ public class LevelSelection : MonoBehaviour {
 		SceneManager.LoadScene("MainMenu");
 	}
 
+    // Region 1 Stages
+
 	public void stage1_1()
 	{
 		Combat.setNumberOfPlayerMonsters(1);
@@ -70,8 +72,9 @@ public class LevelSelection : MonoBehaviour {
         List<Monster> _ennemies = new List<Monster>();
 
 		_ennemies.Add(ListMonsters.get("Demonorose"));
-        //_ennemies[0].setHp(100);
-        //_ennemies[0].setMaxHp(100);
+        _ennemies[0].setHp(_ennemies[0].getMaxHp() / 2);
+        _ennemies[0].setMaxHp(_ennemies[0].getMaxHp() / 2);
+        _ennemies[0].setAttack(_ennemies[0].getAttack() / 2);
         Combat.setEnnemies(_ennemies);
 
         // Setup rewards
@@ -90,11 +93,14 @@ public class LevelSelection : MonoBehaviour {
         // Setup ennemies
         List<Monster> _ennemies = new List<Monster>();
 		_ennemies.Add(ListMonsters.get("Ecufeu"));
-		_ennemies.Add(ListMonsters.get("Coolicorn"));
-        //_ennemies[0].setHp(150);
-        //_ennemies[0].setMaxHp(150);
-        //_ennemies[1].setHp(150);
-        //_ennemies[1].setMaxHp(150);
+		_ennemies.Add(ListMonsters.get("Demonorose"));
+        _ennemies[0].setHp((int)(_ennemies[0].getMaxHp() / 1.5));
+        _ennemies[0].setMaxHp((int)(_ennemies[0].getMaxHp() / 1.5));
+        _ennemies[0].setAttack((int)(_ennemies[0].getAttack() / 1.5));
+
+        _ennemies[1].setHp((int)(_ennemies[0].getMaxHp() / 1.5));
+        _ennemies[1].setMaxHp((int)(_ennemies[0].getMaxHp() / 1.5));
+        _ennemies[1].setAttack((int)(_ennemies[0].getAttack() / 1.5));
         Combat.setEnnemies(_ennemies);
 
         // Setup rewards
@@ -104,6 +110,107 @@ public class LevelSelection : MonoBehaviour {
 
         SceneManager.LoadScene("CombatMonsterSelection");
 	}
+
+    public void stage_1_3()
+    {
+        Combat.setNumberOfPlayerMonsters(2);
+        Combat.Background = "Region1Background";
+
+        // Setup ennemies
+        List<Monster> _ennemies = new List<Monster>();
+        _ennemies.Add(ListMonsters.get("Ecufeu"));
+        _ennemies.Add(ListMonsters.get("Coolicorne"));
+       
+        Combat.setEnnemies(_ennemies);
+
+        // Setup rewards
+        Combat.MonsterExperienceReward = 900;
+        Combat.GoldReward = 200;
+        Combat.GemReward = 1;
+
+        SceneManager.LoadScene("CombatMonsterSelection");
+    }
+
+    public void stage_1_4()
+    {
+        Combat.setNumberOfPlayerMonsters(2);
+        Combat.Background = "Region1Background";
+
+        // Setup ennemies
+        List<Monster> _ennemies = new List<Monster>();
+        _ennemies.Add(ListMonsters.get("Demonorose"));
+        _ennemies.Add(ListMonsters.get("Coolicorne"));
+
+        Combat.setEnnemies(_ennemies);
+
+        // Setup rewards
+        Combat.MonsterExperienceReward = 900;
+        Combat.GoldReward = 200;
+        Combat.GemReward = 1;
+
+        SceneManager.LoadScene("CombatMonsterSelection");
+    }
+
+    public void stage_1_5()
+    {
+        Combat.setNumberOfPlayerMonsters(2);
+        Combat.Background = "Region1Background";
+
+        // Setup ennemies
+        List<Monster> _ennemies = new List<Monster>();
+        _ennemies.Add(ListMonsters.get("Fower"));
+        _ennemies.Add(ListMonsters.get("GeekOs"));
+
+        Combat.setEnnemies(_ennemies);
+
+        // Setup rewards
+        Combat.MonsterExperienceReward = 900;
+        Combat.GoldReward = 200;
+        Combat.GemReward = 1;
+
+        SceneManager.LoadScene("CombatMonsterSelection");
+    }
+
+    public void stage_1_6()
+    {
+        Combat.setNumberOfPlayerMonsters(2);
+        Combat.Background = "Region1Background";
+
+        // Setup ennemies
+        List<Monster> _ennemies = new List<Monster>();
+        _ennemies.Add(ListMonsters.get("Pizzaltere"));
+        _ennemies.Add(ListMonsters.get("Cookocat"));
+
+        Combat.setEnnemies(_ennemies);
+
+        // Setup rewards
+        Combat.MonsterExperienceReward = 900;
+        Combat.GoldReward = 200;
+        Combat.GemReward = 1;
+
+        SceneManager.LoadScene("CombatMonsterSelection");
+    }
+
+    public void stage_1_7()
+    {
+        Combat.setNumberOfPlayerMonsters(3);
+        Combat.Background = "Region1Background";
+
+        // Setup ennemies
+        List<Monster> _ennemies = new List<Monster>();
+        _ennemies.Add(ListMonsters.get("T-Vert"));
+        _ennemies.Add(ListMonsters.get("Narvaleine"));
+        _ennemies.Add(ListMonsters.get("Tronsopalin"));
+
+        Combat.setEnnemies(_ennemies);
+
+        // Setup rewards
+        Combat.MonsterExperienceReward = 900;
+        Combat.GoldReward = 200;
+        Combat.GemReward = 1;
+
+        SceneManager.LoadScene("CombatMonsterSelection");
+    }
 
     // Cow Dungeon Stages
 
