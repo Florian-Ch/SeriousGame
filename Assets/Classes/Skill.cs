@@ -3,7 +3,7 @@
 public class Skill
 {
     private static int idCounter = 0;
-	private string name, icon;
+	private string name, icon, description;
 	private int initialCooldown, cooldown, nbTouched, id, nbTurnBoost;
 	private double multiplier;
 	private bool doDamage;
@@ -16,12 +16,13 @@ public class Skill
 	public List<string> Malus { get => malus; set => malus = value; }
 	public int NbTurnBoost { get => nbTurnBoost; set => nbTurnBoost = value; }
 
-	public Skill(string _name, string _icon, int cd, double dmg, int nb_touched = 1, bool do_damage = true, List<string> boosts = null, int nb_turn_boost = 0, List<string> malus = null)
+	public Skill(string _name, string _icon, string desc, int cd, double dmg, int nb_touched = 1, bool do_damage = true, List<string> boosts = null, int nb_turn_boost = 0, List<string> malus = null)
 	{
         idCounter++;
         id = idCounter;
 		name = _name;
 		icon = _icon;
+		description = desc;
 		initialCooldown = cd;
 		multiplier = dmg;
 		nbTouched = nb_touched;
@@ -35,6 +36,8 @@ public class Skill
 	public string getName() { return name; }
 
 	public string getIcon() { return icon; }
+
+	public string getDescription() { return description; }
 
 	public int getInitialCooldown() { return initialCooldown; }
 

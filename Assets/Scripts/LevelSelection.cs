@@ -222,7 +222,7 @@ public class LevelSelection : MonoBehaviour {
         // Setup ennemies
         List<Monster> _ennemies = new List<Monster>();
 
-        Monster boss = new Monster("BOSSVache", "boss", "boss", 10, 10 , 10, 100, new List<Skill>() { new Skill("Brise-Bouche", "Skill", 1, 2) });
+        Monster boss = new Monster("BOSSVache", "boss", "boss", 10, 10 , 10, 100, new List<Skill>() { new Skill("Brise-Bouche", "Skill", "", 1, 2) });
 
         _ennemies.Add(boss);
 
@@ -249,7 +249,7 @@ public class LevelSelection : MonoBehaviour {
         // Setup ennemies
         List<Monster> _ennemies = new List<Monster>();
 
-        Monster boss = new Monster("BOSSChamp", "boss", "boss", 10, 10, 10, 100, new List<Skill>() { new Skill("Brise-Bouche", "Skill", 1, 2) });
+        Monster boss = new Monster("BOSSChamp", "boss", "boss", 10, 10, 10, 100, new List<Skill>() { new Skill("Brise-Bouche", "Skill", "", 1, 2) });
 
         _ennemies.Add(boss);
 
@@ -279,7 +279,7 @@ public class LevelSelection : MonoBehaviour {
         // Setup ennemies
         List<Monster> _ennemies = new List<Monster>();
 
-        Monster boss = new Monster("BOSSKraken", "boss", "boss", 10, 10, 10, 100, new List<Skill>() { new Skill("Brise-Bouche", "Skill", 1, 2) });
+        Monster boss = new Monster("BOSSKraken", "boss", "boss", 10, 10, 10, 100, new List<Skill>() { new Skill("Brise-Bouche", "Skill", "", 1, 2) });
 
         _ennemies.Add(boss);
 

@@ -5,13 +5,15 @@ using UnityEngine.UI;
 
 public class MonsterBox : MonoBehaviour
 {
-	public GameObject monsterButtonPrefab, monstersListContainer, data, foodDisplay, foodListContainer, monsterFoodContainer, monsterFoodFull;
-   
+	public GameObject monsterButtonPrefab, monstersListContainer, data, foodDisplay, skillsDisplay, foodListContainer, monsterFoodContainer, monsterFoodFull;
+    public GameObject imSkill1, imSkill2, imSkill3, imSkill4;
+    public Text skillDescription, skillCd;
+
     private List<Monster> _monsters;
     private Monster selectedMonster;
 
 	private GameObject nameDisplay;
-	private GameObject nameDisplayFood;
+	private GameObject nameDisplayFood, nameDisplaySkill;
 	private GameObject roleDisplay;    
     private GameObject alimDisplay;
     private GameObject levelDisplay;
@@ -26,8 +28,10 @@ public class MonsterBox : MonoBehaviour
     void Start()
     {
         nameDisplayFood = GameObject.Find("MonsterNameFoodDisplay");
+        nameDisplaySkill = GameObject.Find("MonsterNameSkillDisplay");
         monsterFoodFull.SetActive(false);
 		foodDisplay.SetActive(false);
+        skillsDisplay.SetActive(false);
 
 		// Get all gameobjects
 		nameDisplay = GameObject.Find("MonsterName");
@@ -87,6 +91,7 @@ public class MonsterBox : MonoBehaviour
         else
             GameObject.Find("FavoriteMonsterButton").GetComponent<Image>().sprite = Resources.Load<Sprite>("Decor/Star");
         DisplayMonsterFood(m);
+        DisplayMonsterSkills(m);
         // image part
         Sprite monsterSprite = Resources.Load<Sprite>("MonstersSprites/" + m.getName());
         GameObject spriteContainer = GameObject.Find("MonsterSprite");
@@ -94,6 +99,7 @@ public class MonsterBox : MonoBehaviour
         // data part
         nameDisplay.GetComponent<Text>().text = m.getName();
 	    nameDisplayFood.GetComponent<Text>().text = m.getName();
+        nameDisplaySkill.GetComponent<Text>().text = m.getName();
         roleDisplay.GetComponent<Text>().text = m.getRole();
         alimDisplay.GetComponent<Text>().text = m.getDiet();
         levelDisplay.GetComponent<Text>().text = m.getLevel().ToString();
@@ -108,15 +114,66 @@ public class MonsterBox : MonoBehaviour
     public void DisplayFood()
 	{
 		data.SetActive(false);
+        skillsDisplay.SetActive(false);
 		foodDisplay.SetActive(true);
 	}
+
+    public void DisplaySkills()
+    {
+        data.SetActive(false);
+        foodDisplay.SetActive(false);
+        DisplayMonsterSkills(selectedMonster);
+        skillsDisplay.SetActive(true);
+    }
 
     public void DisplayData()
 	{
 		foodDisplay.SetActive(false);
+        skillsDisplay.SetActive(false);
         DisplayMonsterData(selectedMonster);
 		data.SetActive(true);
 	}
+
+    public void DisplayMonsterSkills(Monster m)
+    {
+        imSkill1.GetComponent<Image>().sprite = Resources.Load<Sprite>("SkillsIcons/" + m.Skills[0].getIcon());
+        imSkill1.GetComponent<Button>().onClick.AddListener(() => ChangeSkillInfo(m.Skills[0]));
+        if (m.Skills.Count > 1)
+        {
+            imSkill2.GetComponent<Image>().sprite = Resources.Load<Sprite>("SkillsIcons/" + m.Skills[1].getIcon());
+            imSkill2.GetComponent<Button>().onClick.AddListener(() => ChangeSkillInfo(m.Skills[1]));
+        }
+        else
+        {
+            imSkill2.GetComponent<Image>().sprite = Resources.Load<Sprite>("SkillsIcons/NoSkillIcon");
+        }
+        if (m.Skills.Count > 2)
+        {
+            imSkill3.GetComponent<Image>().sprite = Resources.Load<Sprite>("SkillsIcons/" + m.Skills[2].getIcon());
+            imSkill3.GetComponent<Button>().onClick.AddListener(() => ChangeSkillInfo(m.Skills[2]));
+        }
+        else
+        {
+            imSkill3.GetComponent<Image>().sprite = Resources.Load<Sprite>("SkillsIcons/NoSkillIcon");
+        }
+        if (m.Skills.Count > 3)
+        {
+            imSkill4.GetComponent<Image>().sprite = Resources.Load<Sprite>("SkillsIcons/" + m.Skills[3].getIcon());
+            imSkill4.GetComponent<Button>().onClick.AddListener(() => ChangeSkillInfo(m.Skills[3]));
+        }
+        else
+        {
+            imSkill4.GetComponent<Image>().sprite = Resources.Load<Sprite>("SkillsIcons/NoSkillIcon");
+        }
+        skillDescription.text = m.Skills[0].getDescription();
+        skillCd.text = "Temps de pause : " + m.Skills[0].getInitialCooldown();
+    }
+
+    private void ChangeSkillInfo(Skill s)
+    {
+        skillDescription.text = s.getDescription();
+        skillCd.text = "Temps de pause : " + s.getInitialCooldown();
+    }
 
     public void DisplayFoodList()
     {
